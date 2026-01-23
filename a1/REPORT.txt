@@ -1,0 +1,361 @@
+ASSIGNMENT 1 REPORT
+
+Test Results:
+
+=== Test1.py ===
+Total time for 70,000,000 trivial calls: 5.7089 seconds
+Avg time/call: 81.56 ns
+
+Total time for 70,000,000 trivial calls: 6.3691 seconds
+Avg time/call: 90.99 ns
+
+Total time for 70,000,000 trivial calls: 5.5618 seconds
+Avg time/call: 79.45 ns
+
+Total time for 70,000,000 trivial calls: 6.4874 seconds
+Avg time/call: 92.68 ns
+
+Total time for 70,000,000 trivial calls: 5.8036 seconds
+Avg time/call: 82.91 ns
+
+Total time for 70,000,000 trivial calls: 6.0594 seconds
+Avg time/call: 86.56 ns
+
+Total time for 70,000,000 trivial calls: 6.5997 seconds
+Avg time/call: 94.28 ns
+
+Total time for 70,000,000 trivial calls: 6.2068 seconds
+Avg time/call: 88.67 ns
+
+Total time for 70,000,000 trivial calls: 6.1119 seconds
+Avg time/call: 87.31 ns
+
+Total time for 70,000,000 trivial calls: 6.5683 seconds
+Avg time/call: 93.83 ns
+
+=== Test2.py ===
+Total time for 90,000,000 create/deletes in home directory: 6.1224 seconds
+Avg time: 68.03 ns
+
+Total time for 90,000,000 create/deletes in home directory: 4.8615 seconds
+Avg time: 54.02 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.3657 seconds
+Avg time: 59.62 ns
+
+Total time for 90,000,000 create/deletes in home directory: 4.8067 seconds
+Avg time: 53.41 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.2798 seconds
+Avg time: 58.66 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.6956 seconds
+Avg time: 63.28 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.1170 seconds
+Avg time: 56.86 ns
+
+Total time for 90,000,000 create/deletes in home directory: 4.8941 seconds
+Avg time: 54.38 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.1220 seconds
+Avg time: 56.91 ns
+
+Total time for 90,000,000 create/deletes in home directory: 5.4493 seconds
+Avg time: 60.55 ns
+
+=== Test3.py ===
+Total time for 90,000,000 create/deletes in /tmp: 5.1949 seconds
+Avg time: 57.72 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 5.2492 seconds
+Avg time: 58.32 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 4.8840 seconds
+Avg time: 54.27 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 4.8448 seconds
+Avg time: 53.83 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 4.9759 seconds
+Avg time: 55.29 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 5.1950 seconds
+Avg time: 57.72 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 5.2846 seconds
+Avg time: 58.72 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 4.9160 seconds
+Avg time: 54.62 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 4.8030 seconds
+Avg time: 53.37 ns
+
+Total time for 90,000,000 create/deletes in /tmp: 5.5647 seconds
+Avg time: 61.83 ns
+
+=== Test4.py ===
+Total time for 5,500,000 times getting wall clock time: 6.1296 seconds
+Avg time: 1114.47 ns
+
+Total time for 5,500,000 times getting wall clock time: 6.5215 seconds
+Avg time: 1185.73 ns
+
+Total time for 5,500,000 times getting wall clock time: 6.4085 seconds
+Avg time: 1165.19 ns
+
+Total time for 5,500,000 times getting wall clock time: 6.2124 seconds
+Avg time: 1129.52 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.7093 seconds
+Avg time: 1038.05 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.6015 seconds
+Avg time: 1018.46 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.6805 seconds
+Avg time: 1032.81 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.3509 seconds
+Avg time: 972.89 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.3419 seconds
+Avg time: 971.25 ns
+
+Total time for 5,500,000 times getting wall clock time: 5.1875 seconds
+Avg time: 943.18 ns
+
+=== Test5.py ===
+Total time for 35,000,000 inserts into python dict: 5.0471 seconds
+Avg time: 144.20 ns
+
+Total time for 35,000,000 inserts into python dict: 5.1641 seconds
+Avg time: 147.55 ns
+
+Total time for 35,000,000 inserts into python dict: 5.1526 seconds
+Avg time: 147.22 ns
+
+Total time for 35,000,000 inserts into python dict: 4.9474 seconds
+Avg time: 141.35 ns
+
+Total time for 35,000,000 inserts into python dict: 4.8728 seconds
+Avg time: 139.22 ns
+
+Total time for 35,000,000 inserts into python dict: 4.9351 seconds
+Avg time: 141.00 ns
+
+Total time for 35,000,000 inserts into python dict: 5.7064 seconds
+Avg time: 163.04 ns
+
+Total time for 35,000,000 inserts into python dict: 4.9926 seconds
+Avg time: 142.64 ns
+
+Total time for 35,000,000 inserts into python dict: 4.8941 seconds
+Avg time: 139.83 ns
+
+Total time for 35,000,000 inserts into python dict: 4.9831 seconds
+Avg time: 142.37 ns
+
+=== Test6.py ===
+Total time for 700 TCP opens/closes: 5.0966 seconds
+Avg time: 7.28 ms
+
+Total time for 700 TCP opens/closes: 5.0864 seconds
+Avg time: 7.27 ms
+
+Total time for 700 TCP opens/closes: 5.1414 seconds
+Avg time: 7.34 ms
+
+Total time for 700 TCP opens/closes: 5.1772 seconds
+Avg time: 7.40 ms
+
+Total time for 700 TCP opens/closes: 6.5628 seconds
+Avg time: 9.38 ms
+
+Total time for 700 TCP opens/closes: 5.0637 seconds
+Avg time: 7.23 ms
+
+Total time for 700 TCP opens/closes: 8.2345 seconds
+Avg time: 11.76 ms
+
+Total time for 700 TCP opens/closes: 6.5885 seconds
+Avg time: 9.41 ms
+
+Total time for 700 TCP opens/closes: 5.2086 seconds
+Avg time: 7.44 ms
+
+=== Test7.py ===
+Total time for 215 http connections + read html + close connection: 5.0434 seconds
+Avg time: 23.46 ms
+
+Total time for 215 http connections + read html + close connection: 5.0476 seconds
+Avg time: 23.48 ms
+
+Total time for 215 http connections + read html + close connection: 4.9582 seconds
+Avg time: 23.06 ms
+
+Total time for 215 http connections + read html + close connection: 4.9206 seconds
+Avg time: 22.89 ms
+
+Total time for 215 http connections + read html + close connection: 4.8848 seconds
+Avg time: 22.72 ms
+
+Total time for 215 http connections + read html + close connection: 4.8763 seconds
+Avg time: 22.68 ms
+
+Total time for 215 http connections + read html + close connection: 4.9218 seconds
+Avg time: 22.89 ms
+
+Total time for 215 http connections + read html + close connection: 4.9714 seconds
+Avg time: 23.12 ms
+
+Total time for 215 http connections + read html + close connection: 4.9214 seconds
+Avg time: 22.89 ms
+
+Total time for 215 http connections + read html + close connection: 4.9352 seconds
+Avg time: 22.95 ms
+
+=== Test8.py ===
+Total time for 10,000 json file opens + parses: 5.8990 seconds
+Avg time: 0.59 ms
+
+Total time for 10,000 json file opens + parses: 5.8068 seconds
+Avg time: 0.58 ms
+
+Total time for 10,000 json file opens + parses: 5.3004 seconds
+Avg time: 0.53 ms
+
+Total time for 10,000 json file opens + parses: 5.1852 seconds
+Avg time: 0.52 ms
+
+Total time for 10,000 json file opens + parses: 5.9448 seconds
+Avg time: 0.59 ms
+
+Total time for 10,000 json file opens + parses: 5.4057 seconds
+Avg time: 0.54 ms
+
+Total time for 10,000 json file opens + parses: 5.4342 seconds
+Avg time: 0.54 ms
+
+Total time for 10,000 json file opens + parses: 5.2588 seconds
+Avg time: 0.53 ms
+
+Total time for 10,000 json file opens + parses: 5.3847 seconds
+Avg time: 0.54 ms
+
+Total time for 10,000 json file opens + parses: 5.1986 seconds
+Avg time: 0.52 ms
+
+=== Test9.py ===
+Total time for 18,000 home directory scan + stat: 5.2051 seconds
+Avg time: 0.29 ms
+
+Total time for 18,000 home directory scan + stat: 5.2788 seconds
+Avg time: 0.29 ms
+
+Total time for 18,000 home directory scan + stat: 4.9464 seconds
+Avg time: 0.27 ms
+
+Total time for 18,000 home directory scan + stat: 5.0395 seconds
+Avg time: 0.28 ms
+
+Total time for 18,000 home directory scan + stat: 5.2354 seconds
+Avg time: 0.29 ms
+
+Total time for 18,000 home directory scan + stat: 5.0496 seconds
+Avg time: 0.28 ms
+
+Total time for 18,000 home directory scan + stat: 4.8342 seconds
+Avg time: 0.27 ms
+
+Total time for 18,000 home directory scan + stat: 4.9278 seconds
+Avg time: 0.27 ms
+
+Total time for 18,000 home directory scan + stat: 5.1503 seconds
+Avg time: 0.29 ms
+
+Total time for 18,000 home directory scan + stat: 5.0119 seconds
+Avg time: 0.28 ms
+
+=== Test10.py ===
+Total time for 3,000 home directory scan + stat: 4.6280 seconds
+Avg time: 1.54 ms
+
+Total time for 3,000 home directory scan + stat: 5.2781 seconds
+Avg time: 1.76 ms
+
+Total time for 3,000 home directory scan + stat: 5.0054 seconds
+Avg time: 1.67 ms
+
+Total time for 3,000 home directory scan + stat: 4.9074 seconds
+Avg time: 1.64 ms
+
+Total time for 3,000 home directory scan + stat: 4.4803 seconds
+Avg time: 1.49 ms
+
+Total time for 3,000 home directory scan + stat: 4.5155 seconds
+Avg time: 1.51 ms
+
+Total time for 3,000 home directory scan + stat: 4.8042 seconds
+Avg time: 1.60 ms
+
+Total time for 3,000 home directory scan + stat: 4.6935 seconds
+Avg time: 1.56 ms
+
+Total time for 3,000 home directory scan + stat: 4.6134 seconds
+Avg time: 1.54 ms
+
+Total time for 3,000 home directory scan + stat: 4.6401 seconds
+Avg time: 1.55 ms
+
+===================================================================
+
+RESULTS TABLE (Avg time per operation)
+
+========================================================================================
+Run| Test1 (ns) | Test2 (ns) | Test3 (ns) | Test4 (ns) | Test5 (ns) | Test6 (ms) | Test7 (ms)
+========================================================================================
+1  |  81.56     | *68.03*    |  57.72     | 1114.47    | 144.20     |  7.28      | 23.46
+2  |  90.99     |  54.02     |  58.32     |*1185.73*   | 147.55     |  7.27      |*23.48*
+3  | *79.45*    |  59.62     |  54.27     | 1165.19    | 147.22     |  7.34      | 23.06
+4  |  92.68     | *53.41*    |  53.83     | 1129.52    | 141.35     |  7.40      | 22.89
+5  |  82.91     |  58.66     |  55.29     | 1038.05    | *139.22*   |  9.38      |*22.72*
+6  |  86.56     |  63.28     |  57.72     | 1018.46    | 141.00     | *7.23*     | 22.68
+7  | *94.28*    |  56.86     |  58.72     | 1032.81    | *163.04*   | *11.76*    | 22.89
+8  |  88.67     |  54.38     |  54.62     |  972.89    | 142.64     |  9.41      | 23.12
+9  |  87.31     |  56.91     | *53.37*    |  971.25    | 139.83     |  7.44      | 22.89
+10 |  93.83     |  60.55     | *61.83*    | *943.18*   | 142.37     |            | 22.95
+========================================================================================
+
+=============================================
+Run| Test8 (ms) | Test9 (ms) | Test10 (ms)
+=============================================
+1  |  0.59      |  0.29      |  1.54
+2  |  0.58      |  0.29      | *1.76*
+3  |  0.53      | *0.27*     |  1.67
+4  |  0.52      |  0.28      |  1.64
+5  | *0.59*     | *0.29*     | *1.49*
+6  |  0.54      |  0.28      |  1.51
+7  |  0.54      |  0.27      |  1.60
+8  |  0.53      |  0.27      |  1.56
+9  |  0.54      |  0.29      |  1.54
+10 | *0.52*     |  0.28      |  1.55
+=============================================
+
+
+EXPLANATIONS
+
+- The largest variance comes from Test 6, 4ms variance for a TCP connection
+
+Per-test explanation:
+1. Trivial function calls take place on cpu, very lightweight, hence the fast speeds and small variance
+2. create/delete does some I/O with the filesystem, but still very fast (and my home directory is small
+3. create/delete in tmp - a bit faster and consistent, there is less in my /tmp directory to vary
+4. wall clock time - involves communication with the system to get the current time, this seems to be a pricer call given the longer times
+5. dict insert - again lightweight, all takes place on CPU
+6. TCP connection - longer because of latency over the internet, and varies more depending on example.com's response
+7. HTTP - built on top of TCP so takes more time, but is more consistent, likely because its more complex functions can be abstracted and efficiently completed
+8. JSON parse - very consistent, probably takes place all on CPU
+9. scandir - communicates with filesystem, but low processing so very quick
+10. ls -l - longer than scandir because it likely does more unnecessary tasks rather than the purpose built scandir, and scandir is built for python
