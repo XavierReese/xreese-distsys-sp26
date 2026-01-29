@@ -1,0 +1,19 @@
+Assignment 1 - Measurement
+----------------------------
+
+Measurement Technique: (19/20)
+----------------------------
+Min and Max values were not clearly labeled but implied with * decoration
+
+Results (50/50)
+----------------------------
+
+Commentary (30/30)
+----------------------------
+Thank you for the enumerated observations about each test. 
+
+The principal difference between test 2 and 3 should be that your home directory
+on the student machines is on a shared filesystem, where your /tmp directory is on
+the local disk of the student machine. 
+
+Total: 99/100
