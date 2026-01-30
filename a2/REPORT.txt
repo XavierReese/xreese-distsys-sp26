@@ -1,0 +1,25 @@
+TCP takes significantly longer, even as package size grows. Although I am sure it would show more reliability over many tests, the difference was large.
+I imagine that this is due to the way that TCP guarantees its packets have reached the destination, and its processes for resending, timing packages, etc.
+This aligns with the greater ratio of a small packet size (say 8 bytes) compared to the large 4kb size. For TCP, this ratio in speed was ~197/.56 = 351, while for UDP it was 12/.087 = 137.
+This could be because TCP is more impacted by number of packets than UDP is.
+
+---
+TCP
+
+Method: TCP bufsize:    2 packets: 5242880 time:   825.1761 seconds
+Method: TCP bufsize:    8 packets: 1310720 time:   197.4833 seconds
+Method: TCP bufsize:   32 packets: 327680 time:    48.0153 seconds
+Method: TCP bufsize:  128 packets: 81920 time:    12.0389 seconds
+Method: TCP bufsize:  512 packets: 20480 time:     3.1915 seconds
+Method: TCP bufsize: 2048 packets: 5120 time:     0.9223 seconds
+Method: TCP bufsize: 4096 packets: 2560 time:     0.5679 seconds
+
+---
+UDP
+
+Method: UDP bufsize:    4 packets: 2621440 time:    12.2726 seconds
+Method: UDP bufsize:    8 packets: 1310720 time:     5.3210 seconds
+Method: UDP bufsize:   32 packets:  327680 time:     1.5032 seconds
+Method: UDP bufsize:  128 packets:   81920 time:     0.3849 seconds
+Method: UDP bufsize:  512 packets:   20480 time:     0.0968 seconds
+Method: UDP bufsize: 4096 packets:    2560 time:     0.0869 seconds

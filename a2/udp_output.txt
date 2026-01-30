@@ -1,0 +1,6 @@
+Method: UDP bufsize:    4 packets: 2621440 time:    12.2726 seconds
+Method: UDP bufsize:    8 packets: 1310720 time:     5.3210 seconds
+Method: UDP bufsize:   32 packets:  327680 time:     1.5032 seconds
+Method: UDP bufsize:  128 packets:   81920 time:     0.3849 seconds
+Method: UDP bufsize:  512 packets:   20480 time:     0.0968 seconds
+Method: UDP bufsize: 4096 packets:    2560 time:     0.0869 seconds
