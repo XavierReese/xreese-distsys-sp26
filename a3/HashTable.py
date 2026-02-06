@@ -8,24 +8,32 @@ Date: 6 Feb 2026
 '''
 
 class HashTable:
-    def __init__(self, max_size_bytes=1_000_000):
+    def __init__(self):
         self.table = {}
-        self.max_size_bytes = max_size_bytes
-        self.current_size_bytes = 0
 
     # Insert
     def insert(self, k, v):
-        self.table{k: v}
+        if not isinstance(k, str):
+            raise TypeError("key must be a string")
+
+        self.table[k] = v
 
     # Lookup
     def lookup(self, k):
-        if self.table[k]:
-            return self.table
-        else:
-            return None
+        return self.table.get(k, None)
 
     # Remove
+    def remove(self, k):
+        if k in self.table:
+            del self.table[k]
+            return True
+        else:
+            return False
 
     # Size
+    def size(self):
+        return len(self.table)
 
     # Query
+    def query(self, k):
+        return (k in self.table)
