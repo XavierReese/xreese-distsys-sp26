@@ -18,7 +18,7 @@ from HashTable import HashTable
 BUFSIZE = 1024
 
 class HashTableServer:
-    def __init__(self, host="localhost", port=9246):
+    def __init__(self, host=socket.gethostname(), port=9246):
         self.host = host
         self.port = port
 
@@ -121,7 +121,7 @@ class HashTableServer:
 
 if __name__ == "__main__":
     import sys
-    host = 'localhost'
+    host = socket.gethostname()
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 9246
     ht_server = HashTableServer(host=host, port=port)
     ht_server.serve()
