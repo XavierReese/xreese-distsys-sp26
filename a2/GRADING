@@ -1,0 +1,29 @@
+Assignment 2 - Networking
+Measurement Technique (20/20 Points)
+
+Code Function and Results (40/50 Points)
+	
+	The instructions stated to use a range of buffer sizes in powers of 2 from 1 to 12. 
+
+	I understand that it could be read more ambiguously, such as selecting some buffer sizes
+	from within that range. But you should at least use the same buffer sizes in the tests 
+	for UDP and TCP in order to make a comparison.  
+
+	Your TCP implementation is also a bit unique in that you sent an ack every message. This
+	is no doubt responsible for the extreme time it took to complete. I imagine it influenced 
+	your decision to use less buffer sizes in the smaller range.
+
+	Your UDP implementation however, follows a better pattern where an ack is sent only once 
+	after the total message is sent. This makes the two very hard to compare. 
+
+	For these reasons I will deduct just a partial amount of points concerning the variety of buffer sizes. However 
+	I also have to consider the inconsistency between TCP and UDP implementations and the effect on measurement.
+	
+
+Commentary (25/30 Points)
+
+	You put sufficient effort into making your observations, however it is incorrect to blame the
+	TCP times on the protocol since the main factor in your tests is the overhead in your ack messages.
+	
+
+Total: 85/100 Points
