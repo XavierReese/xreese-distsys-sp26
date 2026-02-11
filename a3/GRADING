@@ -1,0 +1,27 @@
+Assignment 3
+
+Basic Operation (40 points)
+---------------------------
+
+-5 	The program does not implement the "use any port" feature.
+	Server accepts port 0, but it prints "Listening on port 0" instead of the actual assigned port
+
+
+Server Code Details (20 points)
+-------------------------------
+
+-0	HashTable.py and HashTableServer.py implemented correctly
+    
+
+Client Code Details (20 points)
+-------------------------------
+
+-0	TestBasics, TestPerf, and HashTableClient all implemented correctly.
+
+
+Report (20 points)
+------------------
+
+-5	Only provides message schemas. Detailed examples of the messages used for each request and response for each kind of RPC is needed.
+
+total: 90
