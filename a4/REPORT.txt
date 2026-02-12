@@ -1,0 +1,59 @@
+1. Message Schema
+
+Request:
+{
+    "method": "insert" | "lookup" | "remove" | "size" | "query",
+    "key": string,                                                  // optional
+    "value": string,                                                // optional
+}
+
+Response: 
+{
+    "status": "success" | "failure",
+    "result": string,                   // for success, optional
+    "message": string,                  // for failure, optional
+}
+
+2. Results
+
+Client on student12
+Server on student10
+
+Found 1000 test files
+
+INSERT
+----------------------------------------
+Operations:  1000
+Total time:  1.0336 sec
+Throughput:  967.54 ops/sec
+Latency:     1.0336 ms/op
+
+LOOKUP
+----------------------------------------
+Operations:  1000
+Total time:  1.0544 sec
+Throughput:  948.37 ops/sec
+Latency:     1.0544 ms/op
+
+QUERY
+----------------------------------------
+Operations:  1000
+Total time:  0.1790 sec
+Throughput:  5585.38 ops/sec
+Latency:     0.1790 ms/op
+
+REMOVE
+----------------------------------------
+Operations:  1000
+Total time:  0.1795 sec
+Throughput:  5570.42 ops/sec
+Latency:     0.1795 ms/op
+
+
+3. Reflections
+
+It makes sense that Insert and Lookup take a lot longer than Query and Remove, as these are the ones that need to send files over the connection rather than just instructions.
+We saw similar results in Assignment #1, as the local delete/remove are extremely fast, opening a TCP request is orders of magnitude longer, but then actually reading something back
+(an html file) was again even larger. Here, the connection is quicker than through http to the internet, but still it takes a significant delay to transmit the files.
+
+The similarity in timing of query and remove show that their differences are negligible and most of the latency likely comes from the connection between the student machines itself.
