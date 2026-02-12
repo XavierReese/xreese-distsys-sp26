@@ -7,12 +7,108 @@ Request:
     "value": string,                                                // optional
 }
 
+
 Response: 
 {
     "status": "success" | "failure",
     "result": string,                   // for success, optional
     "message": string,                  // for failure, optional
 }
+
+EXAMPLES
+
+1.
+    {
+        "method": "insert"
+        "key": "key1"
+        "value": "hello world"
+    }
+
+    ->
+
+    No Response
+
+
+2.
+    {
+        "method": "lookup",
+        "key": "key1"
+    }
+
+    ->
+
+    {
+        "status": "success",
+        "result": "hello world"
+    }
+
+
+3.
+    {
+        "method": "lookup",
+        "key": "dne"
+    }
+
+    ->
+
+    {
+        "status": "success",
+        "result": None
+    }
+
+
+4.
+    {
+        "method": "remove"
+        "key": "key1"
+    }
+
+    ->
+
+    { "status": success }
+
+
+5. 
+    {
+        "method": remove"
+        "key": "dne"
+    }
+
+    ->
+
+    {
+        "status": "failure",
+        "message": "key dne not found in table"
+    }
+
+6.
+    { "method": "size" }
+
+    ->
+
+    { "status": "success", "result": 1 }
+
+7. 
+    { "method": "query", "key": "key1"  }
+
+    ->
+
+    { "status": "success", "result": True }
+
+8. 
+    { "method": "query", "key": "dne"  }
+
+    ->
+
+    { "status": "success", "result": False }
+
+8. 
+    { "method": "dne"  }
+
+    ->
+
+    { "status": "failure", "message": "method dne does not exist"  }
+
 
 2. Results
 
