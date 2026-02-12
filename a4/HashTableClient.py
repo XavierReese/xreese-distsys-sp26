@@ -62,10 +62,11 @@ class HashTableClient:
 
         res = json.loads(self._recv().decode())
 
-        if res.get("status") == "failure":
-            raise Exception(res.get("message", "Unknown Server Error"))
+        if not res.get("ok"):
+            print(f"{res.get("error", "Unknown Error")} : {res.get("message", "Unknown Server Error")}")
+            return res
 
-        return res
+        return res.get("data")
 
     ######################
 
@@ -74,17 +75,17 @@ class HashTableClient:
         return True
 
     def lookup(self, k):
-        return self._rpc("lookup", k).get("result")
+        return self._rpc("lookup", k).get("value")
 
     def remove(self, k):
         self._rpc("remove", k)
         return True                                 # treats non-existent k as success
 
     def size(self):
-        return self._rpc("size").get("result")
+        return self._rpc("size").get("value")
 
     def query(self, k):
-        res = self._rpc("query", k).get("result")
+        res = self._rpc("query", k).get("value")
         return res
 
     #######################

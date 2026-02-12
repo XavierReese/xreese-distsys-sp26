@@ -66,6 +66,41 @@ class HashTableServer:
             return prefix
         length = int(prefix.decode('utf-8'))
         return self._recv_exact(conn, length)
+
+    def _check_schema(self, msg):
+        print(msg)
+        method = msg.get("method")
+        key = msg.get("key")
+
+        match method:
+            case "insert":
+                if type(key) is not str:
+                    return False, "invalid key - must be a string"
+                if type(msg.get("value")) is not str:
+                    return False, "invalid value - must be a string"
+
+            case "lookup":
+                if type(key) is not str:
+                    return False, "invalid key - must be a string"
+            
+            case "remove":
+                if type(key) is not str:
+                    return False, "invalid key - must be a string"
+
+            case "query":
+                if type(key) is not str:
+                    return False, "invalid key - must be a string"
+
+            case "size":
+                return True, None
+            
+            case _:
+                return False, f"unknown method: {method}"
+
+        return True, None
+
+                
+
     #########################
 
     def handle(self, conn):
@@ -82,6 +117,11 @@ class HashTableServer:
                 self._send(conn, {"status": "failure", "message": f"error decoding message: {str(e)}"})
                 continue
 
+            ok, err_msg = self._check_schema(req)
+            if not ok:
+                self._send(conn, {"ok": False, "error": "Invalid Params", "message": err_msg})
+                continue
+
             res = self.execute(req)
 
             self._send(conn, res)
@@ -95,28 +135,32 @@ class HashTableServer:
             match method:
                 case "insert":
                     self.ht.insert(k, v)
-                    return {"status": "success"}
+                    return {"ok": True}
 
                 case "lookup":
-                    return {"status": "success", "result": self.ht.lookup(k)}
+                    return {"ok": True, "data": { "value": self.ht.lookup(k)}}
 
                 case "remove":
                     if self.ht.remove(k):
-                        return {"status": "success"}
+                        return {"ok": True}
                     else:
-                        return {"status": "success", "message": f"key {k} not found in table"}
+                        return {"ok": False, "error": "Not Found", "message": f"key {k} does not exist"}
 
                 case "size":
-                    return {"status": "success", "result": self.ht.size()}
+                    size = self.ht.size()
+                    if size is not None:
+                        return {"ok": True, "data": { "value": size}}
+                    else:
+                        return {"ok": False, "error": "Internal Error", "message": "Error getting size"}
 
                 case "query":
-                    return {"status": "success", "result": self.ht.query(k)}
+                    return {"ok": True, "data": { "value": self.ht.query(k)}}
 
                 case _:
-                    return {"status": "failure", "message": f"method \"{method}\" does not exist"}
+                    return {"ok": False, "error": "Invalid Params", "message": f"method \"{method}\" does not exist"}
 
         except Exception as e:
-            return {"status": "failure", "message": str(e)}
+            return {"ok": False, "error": "Internal Error", "message": str(e)}
 
 ###################
 
