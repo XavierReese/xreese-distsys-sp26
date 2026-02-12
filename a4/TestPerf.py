@@ -113,7 +113,7 @@ def main():
         key = filename
         client.remove(key)
 
-    measure("REMOVE", remove_func, files)
+    #measure("REMOVE", remove_func, files)
 
 
     print("\nPerformance test complete.")

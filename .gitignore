@@ -3,3 +3,5 @@ __pycache__/
 *.swp
 testdata
 data/
+table.txn
+table.ckpt
