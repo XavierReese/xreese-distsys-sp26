@@ -1,33 +1,24 @@
+Starting 1000 iterations...
+Progress: 0/1000...
+Progress: 100/1000...
+Progress: 200/1000...
+Progress: 300/1000...
+Progress: 400/1000...
+Progress: 500/1000...
+Progress: 600/1000...
+Progress: 700/1000...
+Progress: 800/1000...
+Progress: 900/1000...
 
-Found 1000 test files
-Data directory: testdata
+--- Latency Outliers (Seconds) ---
+Operation: INSERT
+  Fastest: 0.003149s
+  Slowest: 0.080770s
+  Spread:  25.6x slower
+Operation: REMOVE
+  Fastest: 0.001857s
+  Slowest: 0.005400s
+  Spread:  2.9x slower
+----------------------------------
 
-INSERT
-----------------------------------------
-Operations:  1000
-Total time:  5.2697 sec
-Throughput:  189.76 ops/sec
-Latency:     5.2697 ms/op
-
-LOOKUP
-----------------------------------------
-Operations:  1000
-Total time:  2.6527 sec
-Throughput:  376.97 ops/sec
-Latency:     2.6527 ms/op
-
-QUERY
-----------------------------------------
-Operations:  1000
-Total time:  0.1895 sec
-Throughput:  5278.23 ops/sec
-Latency:     0.1895 ms/op
-
-REMOVE
-----------------------------------------
-Operations:  1000
-Total time:  2.6166 sec
-Throughput:  382.17 ops/sec
-Latency:     2.6166 ms/op
-
-Performance test complete.
+All tests complete.
