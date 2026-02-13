@@ -40,6 +40,7 @@ timestamp                 |method |value| details                               
 
 2. Results
 
+ALL WITH:
 Client on student13
 Server on student10
 
@@ -74,9 +75,29 @@ Total time:  2.6166 sec
 Throughput:  382.17 ops/sec
 Latency:     2.6166 ms/op
 
-Performance test complete.
 
+############
+Outliers
+
+--- Latency Outliers (Seconds) ---
+Operation: INSERT
+  Fastest: 0.003149s
+  Slowest: 0.080770s
+  Spread:  25.6x slower
+Operation: REMOVE
+  Fastest: 0.001857s
+  Slowest: 0.005400s
+  Spread:  2.9x slower
+----------------------------------
 
 3. Reflections
 
+For throughput, the following changes are see:
+- Insert sees the largest increase in time. This makes sense, as those changes must be logged, and a file created / written to, all expensive operations.
+- Lookup sees a minor increase. No file is created, nothing is logged, but the hash table must retrieve the contents of a file instead of just returning the value in the table itself
+- Query sees no change, as it doesn't need to touch the file
+- Remove sees a minor uptick. It must now log its changes, and delete a file, but deleting a file is less expensive than finding space, organizing it, and creating a new file.
 
+The outliers show that there are certain cases where the operations take longer. Most obviously, these would occur when the log needs compacted, and that specific operation takes more time.
+However, I also see a much larger spread for Insert than Remove. My best guess is that this is when the table grows to a certain size that python decides to reallocate memory for the whole hash table.
+For a delete, this wouldn't need to happen.
