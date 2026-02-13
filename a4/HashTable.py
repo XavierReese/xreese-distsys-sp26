@@ -16,6 +16,9 @@ class HashTable:
         self.table = {}
         self.log_length = 0
 
+        if not self._startup():
+            raise Exception("Failed on startup")
+
     #####################
     ## Disk Functions
 
@@ -62,17 +65,14 @@ class HashTable:
     def _log(self, m, k=None, v=None, details=None):
         try:
             with open("table.txn", "a", encoding='utf-8') as f:
-                log_entry = {
-                    "timestamp": f"{datetime.now()}",
-                    "method": m,
-                    "key": k,
-                    "details": details
-                }
-                json.dump(log_entry, f, indent=4)
+                log_line = f"{datetime.now()}::{m}::{v}::{details}::{k}\n"
+                f.write(log_line)
+
                 self.log_length += 1
                 if self.log_length >= 100:              # compact after 100 logs
                     self._compact_log()
             return True
+
         except Exception as e:
             print(f"Log Error: {e}")
             raise Exception(e)
@@ -95,8 +95,46 @@ class HashTable:
             print(f"Compact Log Error: {e}")
             return False
 
-    # TODO recovery - make sure to update log_length
+    # TODO flush and sync all over
 
+    def _startup(self):
+        # read ckpt and add to hash table
+        try:
+            with open("table.ckpt", "r", encoding='utf-8') as f:
+                for line in f:
+                    data = line.strip().split("::")
+                    self.table[data[1]] = data[0]
+        except FileNotFoundError:
+            print("No Checkpoint File Found")
+        except Exception as e:
+            print(f"Recover Checkpoint Error: {e}")
+            return False
+
+        # go through line by line and do the log actions. Remove from log as I go?
+        try:
+            with open("table.txn", "r", encoding='utf-8') as f:
+                for line in f:
+                    data = line.strip().split("::")
+                    if data[1] == "insert":
+                        self.table[data[4]] = data[2]
+                    elif data[1] == "remove":
+                        del self.table[data[4]]
+                    self.log_length += 1
+
+        except FileNotFoundError:
+            print("No Log File Found")
+
+        except Exception as e:
+            print(f"Recover Log Error: {e}")
+            return False
+
+        # check that each value in the table references a real file
+        for filename in self.table.values():
+            if not os.path.isfile("./data/" + filename):
+                print(f"File {filename} does not exist")
+                return False
+
+        return True
 
     #####################
 
@@ -110,7 +148,7 @@ class HashTable:
         filename = f"{uuid.uuid4()}.json"
         if self._save_to_disk(filename, v):
             self.table[k] = filename
-            self._log("insert", k, v)
+            self._log("insert", k, filename)
         else:
             raise Exception("Failed saving to disk")
 
