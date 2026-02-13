@@ -1,32 +1,33 @@
+
 Found 1000 test files
 Data directory: testdata
 
 INSERT
 ----------------------------------------
 Operations:  1000
-Total time:  1.0336 sec
-Throughput:  967.54 ops/sec
-Latency:     1.0336 ms/op
+Total time:  5.2697 sec
+Throughput:  189.76 ops/sec
+Latency:     5.2697 ms/op
 
 LOOKUP
 ----------------------------------------
 Operations:  1000
-Total time:  1.0544 sec
-Throughput:  948.37 ops/sec
-Latency:     1.0544 ms/op
+Total time:  2.6527 sec
+Throughput:  376.97 ops/sec
+Latency:     2.6527 ms/op
 
 QUERY
 ----------------------------------------
 Operations:  1000
-Total time:  0.1790 sec
-Throughput:  5585.38 ops/sec
-Latency:     0.1790 ms/op
+Total time:  0.1895 sec
+Throughput:  5278.23 ops/sec
+Latency:     0.1895 ms/op
 
 REMOVE
 ----------------------------------------
 Operations:  1000
-Total time:  0.1795 sec
-Throughput:  5570.42 ops/sec
-Latency:     0.1795 ms/op
+Total time:  2.6166 sec
+Throughput:  382.17 ops/sec
+Latency:     2.6166 ms/op
 
 Performance test complete.

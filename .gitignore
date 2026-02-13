@@ -2,6 +2,6 @@ __pycache__/
 *.pyc
 *.swp
 testdata
-data/
+data/*
 table.txn
 table.ckpt
