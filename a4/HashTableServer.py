@@ -68,7 +68,6 @@ class HashTableServer:
         return self._recv_exact(conn, length)
 
     def _check_schema(self, msg):
-        print(msg)
         method = msg.get("method")
         key = msg.get("key")
 
