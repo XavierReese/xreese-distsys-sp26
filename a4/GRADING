@@ -1,0 +1,25 @@
+Assignment 4 - Persistence
+
+Basic Operation (50/50 points)
+---------------------------
+
+
+Server Code Details (18/20 points)
+-------------------------------
+The instructions requested you perform further verification than comparing
+names on file data integrity when recovering the log, such as comparing size or hash value. 
+
+Client Code Details (10/10 points)
+-------------------------------
+
+
+Report (19/20 points)
+---------------------
+
+Nice implementation overall. I figure the k,v are reversed in the log just 
+so they are aligned nicely? 
+
+Your a4 tag pointed to a commit before your report was finished. I pulled down 
+the latest version to read the discussion section but I'll have to take a point off. 
+
+Total: 97/100
