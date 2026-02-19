@@ -167,9 +167,9 @@ It contains multiple lines.
 
 # ---------- Main ----------
 
-def main(host, port):
+def main(project_name):
 
-    client = HashTableClient(host, port)
+    client = HashTableClient.from_project_name(project_name)
 
     client.connect()
 
@@ -180,9 +180,13 @@ def main(host, port):
 
 if __name__ == "__main__":
     import sys
+    '''
     if len(sys.argv) < 3:
         print("Usage: TestBasics.py hostname port")
         exit(0)
-    host = sys.argv[1]
-    port = int(sys.argv[2])
-    main(host, port)
+        '''
+    if len(sys.argv) != 2:
+        print("Usage: TestBasics.py <project_name>")
+        exit(0)
+    project_name = sys.argv[1]
+    main(project_name)

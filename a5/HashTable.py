@@ -29,7 +29,7 @@ class HashTable:
             with open(temp_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f)
                 f.flush()
-                f.sync(f.fileno())
+                os.fsync(f.fileno())
 
             os.replace(temp_file, filename)
             return True
@@ -70,7 +70,7 @@ class HashTable:
                 log_line = f"{datetime.now()}::{m}::{v}::{details}::{k}\n"
                 f.write(log_line)
                 f.flush()
-                f.sync(f.fileno())
+                os.fsync(f.fileno())
 
                 self.log_length += 1
                 if self.log_length >= 100:              # compact after 100 logs
@@ -89,7 +89,7 @@ class HashTable:
                 for k, v in self.table.items():
                     f.write(f"{v}::{k}\n")        # k,v in reverse b/c key is user-controlled
                     f.flush()
-                    f.sync(f.fileno())
+                    os.fsync(f.fileno())
 
             os.replace(tmp, filename)
             os.remove("table.txn")
@@ -184,3 +184,7 @@ class HashTable:
     # Query
     def query(self, k):
         return (k in self.table)
+
+    # Keys
+    def keys(self):
+        return self.table.keys()

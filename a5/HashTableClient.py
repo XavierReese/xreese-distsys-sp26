@@ -8,16 +8,60 @@ Date: 6 Feb 2026
 '''
 import socket
 import json
+import requests
+import time
 
 class HashTableClient:
-    def __init__(self, host="localhost", port=9246):
+    def __init__(self, host, port):
         self.host = host
         self.port = port
         self.s = None
 
+    @classmethod
+    def from_project_name(cls, project_name):
+        catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
+
+        delay = 1
+        while True:
+            try:
+                response = requests.get(catalog_url)
+                response.raise_for_status()
+                services = response.json()
+
+                # Find the matching entry
+                for entry in services:
+                    if (entry.get("type") == "hashtable" and
+                        entry.get("project") == project_name):
+
+                        host = entry.get("name")
+                        port = entry.get("port")
+                        print(f"Discovered {project_name} at {host}:{port}")
+                        return cls(host, port)
+
+                raise Exception(f"Project '{project_name}' not found in catalog.")
+
+            except Exception as e:
+                print(f"DEBUG ONLY: Discovery Error: {e}, trying again in {delay}s")
+                time.sleep(delay)
+                delay = min(delay * 2, 128)
+
     def connect(self):
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((self.host, self.port))
+        print(f"Connecting to {self.host}:{self.port}")
+        delay = 1
+        while True:
+            try:
+                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                if not self.s:
+                    raise Exception(f"Trouble creating socket")
+                self.s.settimeout(5)
+                self.s.connect((self.host, self.port))
+
+            except Exception as e:
+                print(f"DEBUG ONLY: Connection Error: {e}, trying again in {delay}s")
+                time.sleep(delay)
+                delay = min(delay * 2, 128)
+            else:
+                return
 
     def close(self):
         if self.s:
@@ -58,15 +102,29 @@ class HashTableClient:
             "value": v
         }
 
-        self._send(req)
+        delay = 1
+        while True:
+            try:
+                if not self.s:
+                    self.connect()
 
-        res = json.loads(self._recv().decode())
+                self._send(req)
 
-        if not res.get("ok"):
-            print(f"{res.get("error", "Unknown Error")} : {res.get("message", "Unknown Server Error")}")
-            return res
+                res = json.loads(self._recv().decode())
 
-        return res.get("data")
+                if not res:
+                    raise Exception("No Response Received")
+
+                if not res.get("ok"):
+                    print(f"{res.get("error", "Unknown Error")} : {res.get("message", "Unknown Server Error")}")
+                    return res
+
+                return res.get("data")
+            except Exception as e:
+                print(f"DEBUG ONLY: RPC Request Error: {e}, trying again in {delay}s")
+                time.sleep(delay)
+                delay = min(delay * 2, 128)
+
 
     ######################
 
@@ -87,6 +145,10 @@ class HashTableClient:
     def query(self, k):
         res = self._rpc("query", k).get("value")
         return res
+
+    def get_description(self):
+        res = self._rpc("desc")
+        return (res.data.get("files"), res.data.get("peers"))
 
     #######################
     ### File Functions

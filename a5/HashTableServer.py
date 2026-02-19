@@ -13,6 +13,7 @@ Date: 6 Feb 2026
 
 import socket
 import json
+import time
 from HashTable import HashTable
 import threading
 
@@ -55,19 +56,21 @@ class HashTableServer:
                 print(f"Client Disconnected: {addr}")
 
     def update(self):
-        u = {
-                "type": "hashtable",
-                "owner": "xreese",
-                "port": self.port,
-                "project": self.project_name
-            }
-        
-        try:
-            msg = json.dumps(u).encode('utf-8')
-            self.catalog_s.sendto(msg, (CATALOG_HOST, CATALOG_PORT))
-            print("Update Sent")
-        except Exception as e:
-            print(f"Failed to send update: {e}")
+        while True:
+            u = {
+                    "type": "hashtable",
+                    "owner": "xreese",
+                    "port": self.port,
+                    "project": self.project_name
+                }
+            
+            try:
+                msg = json.dumps(u).encode('utf-8')
+                self.catalog_s.sendto(msg, (CATALOG_HOST, CATALOG_PORT))
+                print("Update Sent")
+            except Exception as e:
+                print(f"Failed to send update: {e}")
+            time.sleep(60)
 
 
 
@@ -120,7 +123,7 @@ class HashTableServer:
 
             case "size":
                 return True, None
-            
+
             case _:
                 return False, f"unknown method: {method}"
 
@@ -183,6 +186,9 @@ class HashTableServer:
                 case "query":
                     return {"ok": True, "data": { "value": self.ht.query(k)}}
 
+                case "desc":
+                    return {"ok": True, "data": { "files": self.ht.keys(), "peers": []}}
+
                 case _:
                     return {"ok": False, "error": "Invalid Params", "message": f"method \"{method}\" does not exist"}
 
@@ -193,11 +199,16 @@ class HashTableServer:
 
 if __name__ == "__main__":
     import sys
-    # host = socket.gethostname()
-    # port = int(sys.argv[1]) if len(sys.argv) > 1
     if len(sys.argv) < 2:
         print("Usage: HashTableServer.py <project_name>")
         exit(1)
     project_name = sys.argv[1]
-    ht_server = HashTableServer(proj=project_name)
+
+    # host = socket.gethostname()
+
+    if len(sys.argv) > 2:
+        port = int(sys.argv[2])
+        ht_server = HashTableServer(proj=project_name, port=port)
+    else:
+        ht_server = HashTableServer(proj=project_name)
     ht_server.serve()
