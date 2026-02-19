@@ -5,7 +5,7 @@ HashTableServer.py
 server-side RPC main program
 default port = 9246
 
-Usage: HashTableServer.py port_number
+Usage: HashTableServer.py PROJECT_NAME
 
 Author: Xavier Reese
 Date: 6 Feb 2026
@@ -14,23 +14,34 @@ Date: 6 Feb 2026
 import socket
 import json
 from HashTable import HashTable
+import threading
 
 BUFSIZE = 1024
 
+CATALOG_HOST = "catalog.cse.nd.edu"
+CATALOG_PORT = 9097
+
 class HashTableServer:
-    def __init__(self, host=socket.gethostname(), port=9246):
+    def __init__(self, proj, host=socket.gethostname(), port=0):
         self.host = host
         self.port = port
+        self.project_name = proj
 
         self.ht = HashTable()
 
+        # TCP -- Client
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.bind((self.host, self.port))
         self.s.listen(1)                                                 # single client for now
         _, self.port = self.s.getsockname()
         print(f"Server listening on {self.host}:{self.port}")
 
+        # UDP -- Catalog
+        self.catalog_s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.catalog_s.connect((CATALOG_HOST, CATALOG_PORT))
+
     def serve(self):
+        threading.Thread(target=self.update, daemon=True).start()
         while True:
             conn, addr = self.s.accept()
             print(f"Client Connected: {addr}")
@@ -43,7 +54,24 @@ class HashTableServer:
                 conn.close()
                 print(f"Client Disconnected: {addr}")
 
-    ###### HELPER FUNCTIONS
+    def update(self):
+        u = {
+                "type": "hashtable",
+                "owner": "xreese",
+                "port": self.port,
+                "project": self.project_name
+            }
+        
+        try:
+            msg = json.dumps(u).encode('utf-8')
+            self.catalog_s.sendto(msg, (CATALOG_HOST, CATALOG_PORT))
+            print("Update Sent")
+        except Exception as e:
+            print(f"Failed to send update: {e}")
+
+
+
+    ###### SEND/RECEIVE
     def _send(self, conn, msg):
         data = json.dumps(msg).encode('utf-8')
         length = len(data)
@@ -165,7 +193,11 @@ class HashTableServer:
 
 if __name__ == "__main__":
     import sys
-    host = socket.gethostname()
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 9246
-    ht_server = HashTableServer(host=host, port=port)
+    # host = socket.gethostname()
+    # port = int(sys.argv[1]) if len(sys.argv) > 1
+    if len(sys.argv) < 2:
+        print("Usage: HashTableServer.py <project_name>")
+        exit(1)
+    project_name = sys.argv[1]
+    ht_server = HashTableServer(proj=project_name)
     ht_server.serve()

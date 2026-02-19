@@ -28,6 +28,8 @@ class HashTable:
         try:
             with open(temp_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f)
+                f.flush()
+                f.sync(f.fileno())
 
             os.replace(temp_file, filename)
             return True
@@ -67,6 +69,8 @@ class HashTable:
             with open("table.txn", "a", encoding='utf-8') as f:
                 log_line = f"{datetime.now()}::{m}::{v}::{details}::{k}\n"
                 f.write(log_line)
+                f.flush()
+                f.sync(f.fileno())
 
                 self.log_length += 1
                 if self.log_length >= 100:              # compact after 100 logs
@@ -83,7 +87,9 @@ class HashTable:
         try:
             with open(tmp, "w", encoding='utf-8') as f:
                 for k, v in self.table.items():
-                    f.write(f"{v}::{k}\n")        # key & value stored in reverse because key is user controlled
+                    f.write(f"{v}::{k}\n")        # k,v in reverse b/c key is user-controlled
+                    f.flush()
+                    f.sync(f.fileno())
 
             os.replace(tmp, filename)
             os.remove("table.txn")
@@ -95,8 +101,6 @@ class HashTable:
             print(f"Compact Log Error: {e}")
             return False
 
-    # TODO flush and sync all over
-
     def _startup(self):
         # read ckpt and add to hash table
         try:
@@ -104,6 +108,7 @@ class HashTable:
                 for line in f:
                     data = line.strip().split("::")
                     self.table[data[1]] = data[0]
+            return True
         except FileNotFoundError:
             print("No Checkpoint File Found")
         except Exception as e:
