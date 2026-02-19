@@ -1,0 +1,103 @@
+1. Checkpoint/Log Examples
+
+table.ckpt
+
+filename                                 |  key
+
+6c7e81f4-e552-4e3a-8795-ed71faa7cbd6.json::query_key
+6c0537be-3cdd-4ce0-baca-b268d9106ce6.json::file_key
+5f25d029-2566-46a2-9b5f-6d2e5219cebc.json::file_941.dat
+89ecf58a-f491-4cbc-96db-9e3abe887cde.json::file_942.dat
+7d933ac1-ec69-46d5-a0a2-402c57c27ad0.json::file_943.dat
+79b7b71b-0530-487f-87b2-cf475b4aa922.json::file_944.dat
+b2b80d2a-e89a-4d84-bb7d-c84ec8271e30.json::file_945.dat
+55aba8d3-7022-45d1-ba7d-1838de49d4fa.json::file_946.dat
+d2860587-c944-4d91-9094-078260bf5d42.json::file_947.dat
+7224f547-3cac-41fd-8af4-5bb4c0acc1ba.json::file_948.dat
+
+
+
+
+table.txn
+
+removes:
+
+timestamp                 | method|value| details                                                 | key
+2026-02-13 00:48:27.417594::remove::None::previous_value=5f25d029-2566-46a2-9b5f-6d2e5219cebc.json::file_941.dat
+2026-02-13 00:48:27.417686::remove::None::previous_value=89ecf58a-f491-4cbc-96db-9e3abe887cde.json::file_942.dat
+2026-02-13 00:48:27.417766::remove::None::previous_value=7d933ac1-ec69-46d5-a0a2-402c57c27ad0.json::file_943.dat
+2026-02-13 00:48:27.417845::remove::None::previous_value=79b7b71b-0530-487f-87b2-cf475b4aa922.json::file_944.dat
+2026-02-13 00:48:27.417923::remove::None::previous_value=b2b80d2a-e89a-4d84-bb7d-c84ec8271e30.json::file_945.dat
+
+inserts:
+
+timestamp                 |method |value| details                                                 | key
+2026-02-13 00:48:27.419430::remove::None::previous_value=98d87e43-0979-4273-8fd3-9d615ab71725.json::file_962.dat
+2026-02-13 00:48:27.419552::remove::None::previous_value=63fba62f-9047-4382-8f2e-48352c2cc09b.json::file_963.dat
+2026-02-13 00:48:27.419639::remove::None::previous_value=b077fefc-02c0-4a2c-acf4-b8853e287a0a.json::file_964.dat
+2026-02-13 00:48:27.419720::remove::None::previous_value=705bf60b-d1f3-4ddd-9aaa-c44b76270f51.json::file_965.dat
+2026-02-13 00:48:27.419806::remove::None::previous_value=2ce4d194-1f19-4980-a47c-6fc22cab4649.json::file_966.dat
+
+2. Results
+
+ALL WITH:
+Client on student13
+Server on student10
+
+Found 1000 test files
+Data directory: testdata
+
+INSERT
+----------------------------------------
+Operations:  1000
+Total time:  5.2697 sec
+Throughput:  189.76 ops/sec
+Latency:     5.2697 ms/op
+
+LOOKUP
+----------------------------------------
+Operations:  1000
+Total time:  2.6527 sec
+Throughput:  376.97 ops/sec
+Latency:     2.6527 ms/op
+
+QUERY
+----------------------------------------
+Operations:  1000
+Total time:  0.1895 sec
+Throughput:  5278.23 ops/sec
+Latency:     0.1895 ms/op
+
+REMOVE
+----------------------------------------
+Operations:  1000
+Total time:  2.6166 sec
+Throughput:  382.17 ops/sec
+Latency:     2.6166 ms/op
+
+
+############
+Outliers
+
+--- Latency Outliers (Seconds) ---
+Operation: INSERT
+  Fastest: 0.003149s
+  Slowest: 0.080770s
+  Spread:  25.6x slower
+Operation: REMOVE
+  Fastest: 0.001857s
+  Slowest: 0.005400s
+  Spread:  2.9x slower
+----------------------------------
+
+3. Reflections
+
+For throughput, the following changes are see:
+- Insert sees the largest increase in time. This makes sense, as those changes must be logged, and a file created / written to, all expensive operations.
+- Lookup sees a minor increase. No file is created, nothing is logged, but the hash table must retrieve the contents of a file instead of just returning the value in the table itself
+- Query sees no change, as it doesn't need to touch the file
+- Remove sees a minor uptick. It must now log its changes, and delete a file, but deleting a file is less expensive than finding space, organizing it, and creating a new file.
+
+The outliers show that there are certain cases where the operations take longer. Most obviously, these would occur when the log needs compacted, and that specific operation takes more time.
+However, I also see a much larger spread for Insert than Remove. My best guess is that this is when the table grows to a certain size that python decides to reallocate memory for the whole hash table.
+For a delete, this wouldn't need to happen.
