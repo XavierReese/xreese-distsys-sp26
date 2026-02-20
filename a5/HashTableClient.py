@@ -12,13 +12,14 @@ import requests
 import time
 
 class HashTableClient:
-    def __init__(self, host, port):
+    def __init__(self, host, port, project_name=None):
         self.host = host
         self.port = port
+        self.project_name = project_name
         self.s = None
 
-    @classmethod
-    def from_project_name(cls, project_name):
+    @staticmethod
+    def get_most_recent(project_name):
         catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
 
         delay = 1
@@ -31,20 +32,14 @@ class HashTableClient:
                 # Find the matching entry
                 most_recent = None
                 for entry in services:
-                    print(entry)
                     if (entry.get("type") == "hashtable" and
                         entry.get("project") == project_name):
-                            if most_recent == None or 
-                            entry.get("lastheardfrom") > most_recent.get("lastheardfrom"):
-                                if most_recent:
-                                    printf(f"{entry.get("lastheardfrom")} > {most_recent.get("lastheardfrom")}")
+                            if (not most_recent or 
+                            entry.get("lastheardfrom") > most_recent.get("lastheardfrom")):
                                 most_recent = entry
 
                 if most_recent:
-                    host = most_recent.get("name")
-                    port = most_recent.get("port")
-                    print(f"Discovered {project_name} at {host}:{port}")
-                    return cls(host, port)
+                    return most_recent
 
                 raise Exception(f"Project '{project_name}' not found in catalog.")
 
@@ -53,20 +48,46 @@ class HashTableClient:
                 time.sleep(delay)
                 delay = min(delay * 2, 128)
 
+
+    @classmethod
+    def from_project_name(cls, project_name):
+        most_recent = cls.get_most_recent(project_name)
+        print(f"MOST RECENT: {most_recent}")
+        host = most_recent.get("name")
+        port = most_recent.get("port")
+        print(f"Discovered {project_name} at {host}:{port}")
+        return cls(host, port, project_name=project_name)
+
+
+    def discover(self):
+        most_recent = HashTableClient.get_most_recent(self.project_name)
+        self.host = most_recent.get("name")
+        self.port = most_recent.get("port")
+
+
     def connect(self, debug=True):
         if debug:
             print(f"Connecting to {self.host}:{self.port}")
+
         delay = 1
         while True:
+            if not self.port or not self.host:
+                self.discover()
             try:
                 self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 if not self.s:
                     raise Exception(f"Trouble creating socket")
                 self.s.settimeout(5)
                 self.s.connect((self.host, self.port))
+                if not debug:
+                    print(f"DEBUG ONLY: Connected to {self.host}:{self.port}")
 
             except Exception as e:
                 print(f"DEBUG ONLY: Connection Error: {e}, trying again in {delay}s")
+                # If theres a project name, try to rediscover
+                if self.project_name != None:
+                    self.port = None
+                    self.host = None
                 time.sleep(delay)
                 delay = min(delay * 2, 128)
             else:

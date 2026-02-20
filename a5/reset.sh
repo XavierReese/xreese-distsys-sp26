@@ -2,7 +2,7 @@
 
 # Directory to store files
 DIR="./data"
-PROJECT_NAME="xreese-A5"
+PROJECT_NAME=$1
 
 # Number of files
 COUNT=1000
@@ -36,19 +36,19 @@ echo "Total size:"
 du -sh "$DIR"
 
 # start server
-echo "Starting Server..."
-python3 HashTableServer.py $PROJECT_NAME &
-SERVER_PID=$!
+# echo "Starting Server..."
+# python3 HashTableServer.py $PROJECT_NAME &
+# SERVER_PID=$!
 
 # Give the server a moment to register with the catalog
-sleep 2
+# sleep 2
 
 # 3. Add data to the server
 echo "Loading Data..."
 python3 load_data.py $PROJECT_NAME $DIR
 
-echo "Data Loaded. Killing Server"
-kill $SERVER_PID
-sleep 1
+# echo "Data Loaded. Killing Server"
+# kill $SERVER_PID
+# sleep 1
 
 echo "Done"

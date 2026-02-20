@@ -1,0 +1,104 @@
+1. Sample Test Run
+
+Discovered xreese-student13-A5 at student13.cse.nd.edu:52963
+--- Starting Tests for project: xreese-student13-A5 ---
+DEBUG ONLY: Connected to student13.cse.nd.edu:52963
+Server contains 50 files.
+Known peers: ['129.74.152.140:35512', '129.74.152.140:35528']
+Fetched file_00.json in 0.0040s
+Fetched file_01.json in 0.0041s
+Fetched file_02.json in 0.0038s
+Fetched file_03.json in 0.0037s
+Fetched file_04.json in 0.0037s
+Fetched file_05.json in 0.0040s
+Fetched file_06.json in 0.0038s
+Fetched file_07.json in 0.0040s
+Fetched file_08.json in 0.0040s
+Fetched file_09.json in 0.0039s
+
+
+Kill & Restart Server Now (4 second delay)
+
+
+DEBUG ONLY: RPC Request Error: Connection closed, trying again in 1s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 1s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 2s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 4s
+DEBUG ONLY: Connected to student13.cse.nd.edu:43353
+Fetched file_10.json in 8.1442s
+Fetched file_11.json in 0.2106s
+Fetched file_12.json in 0.0044s
+Fetched file_13.json in 0.0041s
+Fetched file_14.json in 0.0041s
+Fetched file_15.json in 0.0040s
+Fetched file_16.json in 0.0042s
+Fetched file_17.json in 0.0040s
+Fetched file_18.json in 0.0042s
+Fetched file_19.json in 0.0046s
+Fetched file_20.json in 0.0040s
+Fetched file_21.json in 0.0044s
+Fetched file_22.json in 0.0045s
+Fetched file_23.json in 0.0047s
+Fetched file_24.json in 0.0043s
+Fetched file_25.json in 0.0049s
+Fetched file_26.json in 0.0045s
+Fetched file_27.json in 0.0045s
+Fetched file_28.json in 0.0046s
+Fetched file_29.json in 0.0049s
+Fetched file_30.json in 0.0047s
+Fetched file_31.json in 0.0044s
+Fetched file_32.json in 0.0046s
+Fetched file_33.json in 0.0040s
+Fetched file_34.json in 0.0041s
+Fetched file_35.json in 0.0039s
+Fetched file_36.json in 0.0045s
+Fetched file_37.json in 0.0041s
+Fetched file_38.json in 0.0044s
+Fetched file_39.json in 0.0042s
+Fetched file_40.json in 0.0040s
+Fetched file_41.json in 0.0042s
+Fetched file_42.json in 0.0041s
+Fetched file_43.json in 0.0046s
+Fetched file_44.json in 0.0041s
+Fetched file_45.json in 0.0039s
+Fetched file_46.json in 0.0044s
+Fetched file_47.json in 0.0045s
+Fetched file_48.json in 0.0043s
+Fetched file_49.json in 0.0044s
+--- Test Complete ---
+
+2. Time Differences
+
+As I left the debug statements in (which would be removed under normal circumstances),
+you can see exactly where the retries take place. Fetching file_10.json taxes over 8 seconds,
+After the RPC Request fails then 3 reconnection requests fail before I manually restarted the server.
+
+3. Implemented Features
+
+- Name Registration
+
+I relatively quickly set up a thread on the server side to send a simple update message.
+On the client side, I used a classmethod to set up an alternate way to initialize the client class,
+using a project name, which would then be found within the catalog to locate the host/port.
+
+I came back to this stage to fix and refine things throughout the other two sections. I added a
+discover() method that shares code with my new classmethod, allowing a re-searching of the catalog
+when the server isn't responding. The most challenging fix was to add logic to choose the most-recently-heard-from
+option if there were multiple entries with my project name. There was a new entry every time a new port was given,
+so this step was quite necessary.
+
+- retry
+
+The most challenging part of this feature was designing the pattern to retry events upon failure. I ended up with a
+delay variable which would double each time, and be capped at 128 seconds. I also had to ensure that no failures would
+"escape" the client and be returned to the user, instead it would launch the client into another retry.
+
+Once I had the pattern, I applied this to the discover, connect, and sending/receiving functions. When the send/receive fails,
+it retries connection to the socket. When that fails, it searches for the most recent port from the catalog, so I can ensure
+that the client is always acting upon the most recent information about the server available
+
+- get_description()
+
+For this feature I was able to mostly make additions to previous logic which separately directed requests based on methods.
+I did add a "peers" set of the server. Every new peer that joins gets added and when the description is requested all peers are returned.
+My previous organization of the methods made no particular part of this very challenging.
