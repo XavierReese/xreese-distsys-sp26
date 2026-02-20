@@ -30,22 +30,20 @@ class HashTableServer:
 
         self.ht = HashTable()
 
-        # TCP -- Client
+        self.peers = set()
+
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.bind((self.host, self.port))
         self.s.listen(1)                                                 # single client for now
         _, self.port = self.s.getsockname()
         print(f"Server listening on {self.host}:{self.port}")
 
-        # UDP -- Catalog
-        self.catalog_s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.catalog_s.connect((CATALOG_HOST, CATALOG_PORT))
-
     def serve(self):
         threading.Thread(target=self.update, daemon=True).start()
         while True:
             conn, addr = self.s.accept()
             print(f"Client Connected: {addr}")
+            self.peers.add(f"{addr[0]}:{addr[1]}")
 
             try:
                 self.handle(conn)
@@ -56,6 +54,9 @@ class HashTableServer:
                 print(f"Client Disconnected: {addr}")
 
     def update(self):
+        self.catalog_s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.catalog_s.connect((CATALOG_HOST, CATALOG_PORT))
+
         while True:
             u = {
                     "type": "hashtable",
@@ -124,6 +125,9 @@ class HashTableServer:
             case "size":
                 return True, None
 
+            case "desc":
+                return True, None
+
             case _:
                 return False, f"unknown method: {method}"
 
@@ -187,7 +191,7 @@ class HashTableServer:
                     return {"ok": True, "data": { "value": self.ht.query(k)}}
 
                 case "desc":
-                    return {"ok": True, "data": { "files": self.ht.keys(), "peers": []}}
+                    return {"ok": True, "data": { "files": self.ht.files(), "peers": list(self.peers)}}
 
                 case _:
                     return {"ok": False, "error": "Invalid Params", "message": f"method \"{method}\" does not exist"}

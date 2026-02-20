@@ -104,10 +104,13 @@ class HashTable:
     def _startup(self):
         # read ckpt and add to hash table
         try:
+            nfiles = 0
             with open("table.ckpt", "r", encoding='utf-8') as f:
                 for line in f:
                     data = line.strip().split("::")
                     self.table[data[1]] = data[0]
+                    nfiles += 1
+            print(f"Recovered {nfiles} files from Checkpoint")
             return True
         except FileNotFoundError:
             print("No Checkpoint File Found")
@@ -117,14 +120,18 @@ class HashTable:
 
         # go through line by line and do the log actions. Remove from log as I go?
         try:
+            nfiles = 0
             with open("table.txn", "r", encoding='utf-8') as f:
                 for line in f:
                     data = line.strip().split("::")
                     if data[1] == "insert":
                         self.table[data[4]] = data[2]
+                        nfiles += 1
                     elif data[1] == "remove":
                         del self.table[data[4]]
+                        nfiles -= 1
                     self.log_length += 1
+            print(f"Log changed file count by {nfiles}")
 
         except FileNotFoundError:
             print("No Log File Found")
@@ -186,5 +193,5 @@ class HashTable:
         return (k in self.table)
 
     # Keys
-    def keys(self):
-        return self.table.keys()
+    def files(self):
+        return list(self.table.keys())

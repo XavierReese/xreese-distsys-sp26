@@ -45,8 +45,9 @@ class HashTableClient:
                 time.sleep(delay)
                 delay = min(delay * 2, 128)
 
-    def connect(self):
-        print(f"Connecting to {self.host}:{self.port}")
+    def connect(self, debug=True):
+        if debug:
+            print(f"Connecting to {self.host}:{self.port}")
         delay = 1
         while True:
             try:
@@ -106,7 +107,7 @@ class HashTableClient:
         while True:
             try:
                 if not self.s:
-                    self.connect()
+                    self.connect(False)
 
                 self._send(req)
 
@@ -122,6 +123,7 @@ class HashTableClient:
                 return res.get("data")
             except Exception as e:
                 print(f"DEBUG ONLY: RPC Request Error: {e}, trying again in {delay}s")
+                self.s = None
                 time.sleep(delay)
                 delay = min(delay * 2, 128)
 
@@ -148,7 +150,7 @@ class HashTableClient:
 
     def get_description(self):
         res = self._rpc("desc")
-        return (res.data.get("files"), res.data.get("peers"))
+        return (res.get("files"), res.get("peers"))
 
     #######################
     ### File Functions

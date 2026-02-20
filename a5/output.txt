@@ -1,24 +1,64 @@
-Starting 1000 iterations...
-Progress: 0/1000...
-Progress: 100/1000...
-Progress: 200/1000...
-Progress: 300/1000...
-Progress: 400/1000...
-Progress: 500/1000...
-Progress: 600/1000...
-Progress: 700/1000...
-Progress: 800/1000...
-Progress: 900/1000...
+Discovered xreese-A5 at fedora-x.dhcp.nd.edu:47037
+--- Starting Tests for project: xreese-A5 ---
+Server contains 50 files.
+Known peers: ['10.24.126.61:45124', '10.24.126.61:45138']
+Fetched file_00.json in 0.0019s
+Fetched file_01.json in 0.0018s
+Fetched file_02.json in 0.0029s
+Fetched file_03.json in 0.0013s
+Fetched file_04.json in 0.0019s
+Fetched file_05.json in 0.0022s
+Fetched file_06.json in 0.0014s
+Fetched file_07.json in 0.0009s
+Fetched file_08.json in 0.0020s
+Fetched file_09.json in 0.0009s
 
---- Latency Outliers (Seconds) ---
-Operation: INSERT
-  Fastest: 0.003149s
-  Slowest: 0.080770s
-  Spread:  25.6x slower
-Operation: REMOVE
-  Fastest: 0.001857s
-  Slowest: 0.005400s
-  Spread:  2.9x slower
-----------------------------------
 
-All tests complete.
+Kill & Restart Server Now (4 second delay)
+
+
+DEBUG ONLY: RPC Request Error: Connection closed, trying again in 1s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 1s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 2s
+DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 4s
+Fetched file_10.json in 8.0095s
+Fetched file_11.json in 0.0017s
+Fetched file_12.json in 0.0020s
+Fetched file_13.json in 0.0020s
+Fetched file_14.json in 0.0016s
+Fetched file_15.json in 0.0019s
+Fetched file_16.json in 0.0012s
+Fetched file_17.json in 0.0016s
+Fetched file_18.json in 0.0010s
+Fetched file_19.json in 0.0010s
+Fetched file_20.json in 0.0015s
+Fetched file_21.json in 0.0010s
+Fetched file_22.json in 0.0018s
+Fetched file_23.json in 0.0014s
+Fetched file_24.json in 0.0018s
+Fetched file_25.json in 0.0020s
+Fetched file_26.json in 0.0017s
+Fetched file_27.json in 0.0017s
+Fetched file_28.json in 0.0036s
+Fetched file_29.json in 0.0016s
+Fetched file_30.json in 0.0015s
+Fetched file_31.json in 0.0021s
+Fetched file_32.json in 0.0015s
+Fetched file_33.json in 0.0014s
+Fetched file_34.json in 0.0017s
+Fetched file_35.json in 0.0017s
+Fetched file_36.json in 0.0018s
+Fetched file_37.json in 0.0018s
+Fetched file_38.json in 0.0018s
+Fetched file_39.json in 0.0019s
+Fetched file_40.json in 0.0018s
+Fetched file_41.json in 0.0016s
+Fetched file_42.json in 0.0019s
+Fetched file_43.json in 0.0019s
+Fetched file_44.json in 0.0019s
+Fetched file_45.json in 0.0020s
+Fetched file_46.json in 0.0018s
+Fetched file_47.json in 0.0016s
+Fetched file_48.json in 0.0010s
+Fetched file_49.json in 0.0010s
+--- Test Complete ---
