@@ -29,14 +29,22 @@ class HashTableClient:
                 services = response.json()
 
                 # Find the matching entry
+                most_recent = None
                 for entry in services:
+                    print(entry)
                     if (entry.get("type") == "hashtable" and
                         entry.get("project") == project_name):
+                            if most_recent == None or 
+                            entry.get("lastheardfrom") > most_recent.get("lastheardfrom"):
+                                if most_recent:
+                                    printf(f"{entry.get("lastheardfrom")} > {most_recent.get("lastheardfrom")}")
+                                most_recent = entry
 
-                        host = entry.get("name")
-                        port = entry.get("port")
-                        print(f"Discovered {project_name} at {host}:{port}")
-                        return cls(host, port)
+                if most_recent:
+                    host = most_recent.get("name")
+                    port = most_recent.get("port")
+                    print(f"Discovered {project_name} at {host}:{port}")
+                    return cls(host, port)
 
                 raise Exception(f"Project '{project_name}' not found in catalog.")
 

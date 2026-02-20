@@ -60,8 +60,8 @@ class HashTableServer:
         while True:
             u = {
                     "type": "hashtable",
-                    "owner": "xreese",
                     "port": self.port,
+                    "owner": "xreese",
                     "project": self.project_name
                 }
             
