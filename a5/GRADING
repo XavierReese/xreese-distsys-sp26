@@ -1,0 +1,30 @@
+Assignment 5
+
+Basic Operation (30 points)
+---------------------------
+
+-0	Name discovery, client retry, and get_description implemented.
+
+
+
+Server Code Details (20 points)
+-------------------------------
+
+-0	HashTableServer sends update to catalog server on first start and periodically.
+
+
+
+Client Code Details (30 points)
+-------------------------------
+
+-0	HashTableClient connects to the server via catalog server, and retries correctly.
+
+
+Report, Test.py (20 points)
+------------------
+
+-0	Test contains the correct functions; REPORT includes Test's output and highlights retry section, with good discussion.
+
+
+Note: load_data should support all kinds of files (not just .json)
+total: 100
