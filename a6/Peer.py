@@ -32,27 +32,20 @@ class Peer:
         self.project_name = project_name
         self.sel = selectors.DefaultSelector()
 
-        # Each peer registers under a unique name: project_name-peer_name
-        # This avoids conflicts when multiple peers share the same project.
         unique_proj = f"{project_name}-{peer_name}"
 
-        # Start our server with the unique project name so it registers
-        # under a name that won't collide with other peers in this project.
         self.server = HashTableServer(proj=unique_proj, peer_id=peer_name)
 
-        # Register the master socket with the selector for accept events
         self.master_socket = self.server.get_socket()
         self.master_socket.setblocking(False)
         self.sel.register(self.master_socket, selectors.EVENT_READ, data="accept")
 
-        # Start catalog heartbeat thread so other peers can discover us
+        # Heartbeat
         self.server.start_catalog_updates()
 
-        # We'll create a client once we discover a target peer
         self.client = None
         self.target_peer_info = None
 
-        # Store the base project_name for discovery (find OTHER peers)
         self.base_project_name = project_name
 
     def run(self):
@@ -108,10 +101,6 @@ class Peer:
     # Client-side: discovery & sync
 
     def find_peer(self):
-        """
-        Search the catalog for any peer in this project OTHER than ourselves.
-        Returns True if a suitable peer was found.
-        """
         print(f"[{self.peer_name}] Querying catalog for peers in project '{self.base_project_name}'...")
         catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
         try:
@@ -151,7 +140,6 @@ class Peer:
             self.perform_p2p_sync()
 
     def perform_p2p_sync(self):
-        """Connect to the known peer and download any keys we don't have."""
         if not self.target_peer_info or not self.client:
             self.find_and_sync()
             return

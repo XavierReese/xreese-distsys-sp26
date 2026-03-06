@@ -31,7 +31,7 @@ class HashTable:
     ## Disk Functions
 
     def _save_to_disk(self, filename: str, data):
-        filename = "./data/" + filename
+        filename = f"./data/" + filename
         temp_file = f"{filename}.tmp"
         try:
             with open(temp_file, 'w', encoding='utf-8') as f:

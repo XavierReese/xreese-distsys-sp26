@@ -1,107 +1,108 @@
-1. Sample Test Run
+1. System Analysis
 
-Discovered xreese-student13-A5 at student13.cse.nd.edu:52963
---- Starting Tests for project: xreese-student13-A5 ---
-DEBUG ONLY: Connected to student13.cse.nd.edu:52963
-Server contains 50 files.
-Known peers: ['129.74.152.140:35512', '129.74.152.140:35528']
-Fetched file_00.json in 0.0040s
-Fetched file_01.json in 0.0041s
-Fetched file_02.json in 0.0038s
-Fetched file_03.json in 0.0037s
-Fetched file_04.json in 0.0037s
-Fetched file_05.json in 0.0040s
-Fetched file_06.json in 0.0038s
-Fetched file_07.json in 0.0040s
-Fetched file_08.json in 0.0040s
-Fetched file_09.json in 0.0039s
+PEER 1 (student machine 13)
+
+No Checkpoint File Found
+No Log File Found
+Server peer1 listening on student13.cse.nd.edu:45291
+[peer1] Peer active on student13.cse.nd.edu:45291. Serving and polling...
+[peer1] Querying catalog for peers in project 'xreese8'...
+Update Sent
+[peer1] No other peers found yet in 'xreese8' — will retry later.
+[peer1] Incoming connection from ('129.74.152.140', 48174)
+[peer1] Incoming connection from ('129.74.152.143', 49962)
+[peer1] Querying catalog for peers in project 'xreese8'...
+[peer1] Found peer 'xreese8-peer3' at student10.cse.nd.edu:55519
+[peer1] Syncing with peer 'xreese8-peer3'...
+DEBUG ONLY: Connected to student10.cse.nd.edu:55519
+[peer1] Already up to date with 'xreese8-peer3'.
+Update Sent
+[peer1] Syncing with peer 'xreese8-peer3'...
+[peer1] Already up to date with 'xreese8-peer3'.
+
+PEER 2 (student machine 10)
+
+No Checkpoint File Found
+No Log File Found
+Server peer2 listening on student10.cse.nd.edu:41961
+[peer2] Peer active on student10.cse.nd.edu:41961. Serving and polling...
+[peer2] Querying catalog for peers in project 'xreese8'...
+Update Sent
+[peer2] Found peer 'xreese8-peer1' at student13.cse.nd.edu:45291
+[peer2] Syncing with peer 'xreese8-peer1'...
+DEBUG ONLY: Connected to student13.cse.nd.edu:45291
+[peer2] Already up to date with 'xreese8-peer1'.
+[peer2] Incoming connection from ('129.74.152.140', 41048)
+[peer2] Syncing with peer 'xreese8-peer1'...
+[peer2] 2 new key(s) to download from 'xreese8-peer1'.
+[peer2] Downloading key: 'file1' from 'xreese8-peer1'
+[peer2] Stored key: 'file1'
+[peer2] Downloading key: 'file2' from 'xreese8-peer1'
+[peer2] Stored key: 'file2'
+Update Sent
+[peer2] Syncing with peer 'xreese8-peer1'...
+[peer2] 1 new key(s) to download from 'xreese8-peer1'.
+[peer2] Downloading key: 'file3' from 'xreese8-peer1'
+[peer2] Stored key: 'file3'
+[peer2] Syncing with peer 'xreese8-peer1'...
+[peer2] Already up to date with 'xreese8-peer1'.
 
 
-Kill & Restart Server Now (4 second delay)
+PEER 3 (student machine 10)
 
-
+No Checkpoint File Found
+No Log File Found
+Server peer3 listening on student10.cse.nd.edu:55519
+[peer3] Peer active on student10.cse.nd.edu:55519. Serving and polling...
+[peer3] Querying catalog for peers in project 'xreese8'...
+Update Sent
+[peer3] Found peer 'xreese8-peer2' at student10.cse.nd.edu:41961
+[peer3] Syncing with peer 'xreese8-peer2'...
+DEBUG ONLY: Connected to student10.cse.nd.edu:41961
+[peer3] Already up to date with 'xreese8-peer2'.
+[peer3] Incoming connection from ('129.74.152.143', 43082)
+[peer3] Syncing with peer 'xreese8-peer2'...
+[peer3] 2 new key(s) to download from 'xreese8-peer2'.
+[peer3] Downloading key: 'file1' from 'xreese8-peer2'
+[peer3] Stored key: 'file1'
+[peer3] Downloading key: 'file2' from 'xreese8-peer2'
+[peer3] Stored key: 'file2'
+Update Sent
+[peer3] Syncing with peer 'xreese8-peer2'...
+[peer3] 1 new key(s) to download from 'xreese8-peer2'.
+[peer3] Downloading key: 'file3' from 'xreese8-peer2'
+[peer3] Stored key: 'file3'
+[peer3] Peer disconnected, closing socket.
+[peer3] Syncing with peer 'xreese8-peer2'...
 DEBUG ONLY: RPC Request Error: Connection closed, trying again in 1s
 DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 1s
-DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 2s
-DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 4s
-DEBUG ONLY: Connected to student13.cse.nd.edu:43353
-Fetched file_10.json in 8.1442s
-Fetched file_11.json in 0.2106s
-Fetched file_12.json in 0.0044s
-Fetched file_13.json in 0.0041s
-Fetched file_14.json in 0.0041s
-Fetched file_15.json in 0.0040s
-Fetched file_16.json in 0.0042s
-Fetched file_17.json in 0.0040s
-Fetched file_18.json in 0.0042s
-Fetched file_19.json in 0.0046s
-Fetched file_20.json in 0.0040s
-Fetched file_21.json in 0.0044s
-Fetched file_22.json in 0.0045s
-Fetched file_23.json in 0.0047s
-Fetched file_24.json in 0.0043s
-Fetched file_25.json in 0.0049s
-Fetched file_26.json in 0.0045s
-Fetched file_27.json in 0.0045s
-Fetched file_28.json in 0.0046s
-Fetched file_29.json in 0.0049s
-Fetched file_30.json in 0.0047s
-Fetched file_31.json in 0.0044s
-Fetched file_32.json in 0.0046s
-Fetched file_33.json in 0.0040s
-Fetched file_34.json in 0.0041s
-Fetched file_35.json in 0.0039s
-Fetched file_36.json in 0.0045s
-Fetched file_37.json in 0.0041s
-Fetched file_38.json in 0.0044s
-Fetched file_39.json in 0.0042s
-Fetched file_40.json in 0.0040s
-Fetched file_41.json in 0.0042s
-Fetched file_42.json in 0.0041s
-Fetched file_43.json in 0.0046s
-Fetched file_44.json in 0.0041s
-Fetched file_45.json in 0.0039s
-Fetched file_46.json in 0.0044s
-Fetched file_47.json in 0.0045s
-Fetched file_48.json in 0.0043s
-Fetched file_49.json in 0.0044s
---- Test Complete ---
 
-2. Time Differences
+2. Diagram
 
-As I left the debug statements in (which would be removed under normal circumstances),
-you can see exactly where the retries take place. Fetching file_10.json taxes over 8 seconds,
-After the RPC Request fails then 3 reconnection requests fail before I manually restarted the server.
+The arrows represent the path which files are synced through.
+e.g. Peer 2 is watching peer 1, any files added to peer 1 are synced to peer 2
 
-I also see a time difference in file_11's fetch time. This could be due to continuing connection-related
-messages, but I'm not entirely sure.
+------------       -------------      ------------
+| Peer 1   |  ->   |   Peer 2  |  ->  |  Peer 3  |
+------------       -------------      ------------
+    A                                       |
+    L---------------------------------------
 
-3. Implemented Features
 
-- Name Registration
+3. Explanation / Analysis
 
-I relatively quickly set up a thread on the server side to send a simple update message.
-On the client side, I used a classmethod to set up an alternate way to initialize the client class,
-using a project name, which would then be found within the catalog to locate the host/port.
+The system as a whole is generally a good method of allowing some syncing, and works especially well for new members joining, but it lacks a guaranteed sync.
+This is because each peer is only watching the first peer that it found. Therefore, the latest peer to join never has anyone watching it, and some other peers
+may also never have been the first to be found by another peer. So some added files won't be propogated throughout the network. The only guarantee
+is that the original peer will be linked to all other peers.
 
-I came back to this stage to fix and refine things throughout the other two sections. I added a
-discover() method that shares code with my new classmethod, allowing a re-searching of the catalog
-when the server isn't responding. The most challenging fix was to add logic to choose the most-recently-heard-from
-option if there were multiple entries with my project name. There was a new entry every time a new port was given,
-so this step was quite necessary.
+In my example, I was 'lucky' that Peer 1 started to watch peer 3, because it meant that no matter which peer I would have added files to, it would have spread
+throughout the system. However, this is not guaranteed to happen.
 
-- retry
+Another issue that I ran into was that with the ND name server, peers which have been closed remain (am I missing a way to remove them?). No matter if there is a way
+to remove them manually, you can't always guarantee that this will occur when a peer has crashed or is slowing down significantly and shouldn't be used. However,
+in this system the peers latch on to the first one that they find and will not seek new peers to watch, so one peer crashing can separate all of the peers which are linked
+to it from the rest of the system.
 
-The most challenging part of this feature was designing the pattern to retry events upon failure. I ended up with a
-delay variable which would double each time, and be capped at 128 seconds. I also had to ensure that no failures would
-"escape" the client and be returned to the user, instead it would launch the client into another retry.
-
-Once I had the pattern, I applied this to the discover, connect, and sending/receiving functions. When the send/receive fails,
-it retries connection to the socket. When that fails, it searches for the most recent port from the catalog, so I can ensure
-that the client is always acting upon the most recent information about the server available
-
-- get_description()
-
-For this feature I was able to mostly make additions to previous logic which separately directed requests based on methods.
-I did add a "peers" set of the server. Every new peer that joins gets added and when the description is requested all peers are returned.
-My previous organization of the methods made no particular part of this very challenging.
+Overall, this feels like a step toward a functioning peer to peer system, but it isn't complete enough to guarantee survival through crashes or complete syncing.
+At scale, these would only be more probable to occur.

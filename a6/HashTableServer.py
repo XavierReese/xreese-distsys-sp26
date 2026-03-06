@@ -27,7 +27,7 @@ class HashTableServer:
         self.host = host
         self.port = port
         self.peer_id = peer_id
-        self.project_name = f"{proj}{self.peer_id}"
+        self.project_name = proj
 
         self.ht = HashTable(peer_id=self.peer_id)
 

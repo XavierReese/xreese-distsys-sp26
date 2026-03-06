@@ -1,0 +1,21 @@
+No Checkpoint File Found
+Log changed file count by 3
+Server peer3 listening on student10.cse.nd.edu:46807
+[peer3] Peer active on student10.cse.nd.edu:46807. Serving and polling...
+[peer3] Querying catalog for peers in project 'xreese1'...
+Update Sent
+[peer3] Found peer 'xreese1-peer2' at student10.cse.nd.edu:57227
+[peer3] Syncing with peer 'xreese1-peer2'...
+DEBUG ONLY: Connected to student10.cse.nd.edu:57227
+DEBUG ONLY: RPC Request Error: timed out, trying again in 1s
+No Checkpoint File Found
+Log changed file count by 3
+Server peer3 listening on student10.cse.nd.edu:38753
+[peer3] Peer active on student10.cse.nd.edu:38753. Serving and polling...
+[peer3] Querying catalog for peers in project 'xreese1'...
+Update Sent
+[peer3] Found peer 'xreese1-peer2' at student10.cse.nd.edu:42067
+[peer3] Syncing with peer 'xreese1-peer2'...
+DEBUG ONLY: Connected to student10.cse.nd.edu:42067
+DEBUG ONLY: RPC Request Error: timed out, trying again in 1s
+DEBUG ONLY: Connected to student10.cse.nd.edu:42067
