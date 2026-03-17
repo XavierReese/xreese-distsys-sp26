@@ -1,0 +1,32 @@
+Assignment 6 - Concurrency
+
+Basic Operation (40/40 points)
+---------------------------
+
+
+Server Code Details (20/20 points)
+-------------------------------
+
+
+Client Code Details (10/10 points)
+-------------------------------
+
+
+Report (23/30 points)
+---------------------
+Implementation looks good, nice work.
+
+For the evaluation we asked for a multi-stage test with at least 7 peers to study the 
+behavior of new peers entering the system. 
+
+Here there are logs and a diagram provided for a study of 3 peers instead of distinct results for the basic test
+and the analysis. There would certainly be more behavior observed in the system if a study was performed on a larger group of peers. 
+
+You diagram is a bit unclear concerning the direction of the arrows and their meaning. I understand the path/direction of data
+is opposite to the direction of the initiated connection. In your example it would be key to highlight the formation of a cycle. 
+It was not necessarily the goal to ensure consistent replication across all clients, but you can achieve it when such a cycle is formed. 
+
+Regarding the catalog and stale entries, there is no way to remove them, so it can be a bit of an annoyance. In the next assignment there 
+will have to be some mechanism of the peer to handle these and other disconnected peers which allows them to continue trying other peers.  
+
+Total: 93/100
