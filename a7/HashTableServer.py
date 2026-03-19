@@ -72,12 +72,17 @@ class HashTableServer:
                 self._send(conn, {"ok": False, "error": "Invalid Params", "message": err_msg})
                 return True
 
-            res = self.execute(req)
+            # get host/port so we can reverse-sync
+            try:
+                ca = conn.getpeername()
+            except Exception:
+                ca = None
+
+            res = self.execute(req, caller_addr=ca)
             self._send(conn, res)
             return True
 
         except BlockingIOError:
-            # No data ready yet on non-blocking socket — not an error
             return True
 
     def serve(self):
@@ -114,6 +119,37 @@ class HashTableServer:
             except Exception as e:
                 print(f"Failed to send update: {e}")
             time.sleep(60)
+
+    def _reverse_sync(self, host, port):
+        """
+        After receiving a get_description, this function is called to reverse sync with that peer
+        """
+        print(f"[Server {self.peer_id}] Reverse syncing to {host}:{port}")
+        try:
+            client = HashTableClient(host, port)
+            remote_files, _ = client.get_description()
+            if not remote_files:
+                return
+            
+            local_keys = set(self.ht.get_keys())
+            new_keys = [k for k in remote_files if not in local_keys]
+
+            # Shuffle keys so not all the same files are replicated
+            import random
+            random.shuffle(new_keys)
+
+            for k in new_keys:
+                data = client.lookup(key)
+                if data is not None:
+                    if not isinstance(data, str):
+                        import json
+                        data = json.dumps(data)
+                    self.insert(key, data)
+                    print(f"[Server {self.peer_id}] Reverse Sync: stored '{k}' from {host}:{port}")
+
+            client.close()
+        except Exception as e:
+            print(f"[Server {self.peer_id}] Reverse Sync FAILED with {host}:{port} {e}")
 
 
 
@@ -202,7 +238,7 @@ class HashTableServer:
 
             self._send(conn, res)
 
-    def execute(self, req):
+    def execute(self, req, caller_addr=None):
         k = req.get("key")
         v = req.get("value")
         method = req.get("method")
@@ -233,7 +269,20 @@ class HashTableServer:
                     return {"ok": True, "data": { "value": self.ht.query(k)}}
 
                 case "desc":
-                    return {"ok": True, "data": { "files": self.ht.files(), "peers": list(self.peers)}}
+                    result = {
+                            "ok": True, 
+                            "data": { "files": self.ht.files(), "peers": list(self.peers)}
+                    }
+
+                    # If we know who asked, go back and sync in reverse with them
+                    if caller_addr:
+                        threading.Thread(
+                            target=self._reverse_sync,
+                            args=(caller_addr[0], caller_addr[1]),
+                            deamon=True
+                        ).start()
+
+                    return result
 
                 case _:
                     return {"ok": False, "error": "Invalid Params", "message": f"method \"{method}\" does not exist"}
