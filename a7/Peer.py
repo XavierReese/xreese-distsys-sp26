@@ -22,6 +22,7 @@ import sys
 import time
 import json
 import requests
+import random
 from HashTableServer import HashTableServer
 from HashTableClient import HashTableClient
 
@@ -160,50 +161,82 @@ class Peer:
             port = p.get("port")
             label = p.get("project", "unknown")
 
+            if self.dead_peers.get(label, 0) >= 3:
+                print(f"[{self.peer_name}] Skipping likely-dead peer '{label}'")
+                continue
+
+            client = HashTableClient(host, port)
+            client.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client.s.settimeout(2) # give up quickly on dead peers
             try:
-                client = HashTable
+                client.s.connect((host, port))
+            except Exception:
+                print(f"[{self.peer_name}] Peer '{label}' unreachable, skipping.")
+                self.dead_peers[label] = self.dead_peers.get(label, 0) + 1
+                client.s = None
+                continue
 
-        if not self.target_peer_info or not self.client:
-            self.find_and_sync()
-            return
+            try:
+                remote_files, _ = client.get_description()
+                if not remote_files:
+                    client.close()
+                    continue
 
-        peer_label = self.target_peer_info.get("project", "unknown")
-        print(f"[{self.peer_name}] Syncing with peer '{peer_label}'...")
-        try:
-            # get_description() returns (files_list, peers_list)
-            remote_files, remote_peers = self.client.get_description()
+                local_keys = set(self.server.get_keys())
+                new_keys = [k for k in remote_files if not in local_keys]
 
-            if remote_files is None:
-                print(f"[{self.peer_name}] Got empty description from peer.")
-                return
+                if not new_keys:
+                    print(f"[{self.peer_name}] Already up to date with '{label}'.")
+                    self.dead_peers[label] = 0
+                    client.close()
+                    continue
 
-            local_keys = set(self.server.get_keys())
-            new_keys = [k for k in remote_files if k not in local_keys]
+                # Shuffle keys for diversity of replications
+                random.shuffle(new_keys)
 
-            if not new_keys:
-                print(f"[{self.peer_name}] Already up to date with '{peer_label}'.")
-                return
+                share = max(1, len(new_keys) // len(peers)) # split new keys amongst peers
+                keys_to_fetch = new_keys[:share]
 
-            print(f"[{self.peer_name}] {len(new_keys)} new key(s) to download from '{peer_label}'.")
-            for key in new_keys:
-                print(f"[{self.peer_name}] Downloading key: '{key}' from '{peer_label}'")
-                data = self.client.lookup(key)
+            print(f"[{self.peer_name}] Fetching {len(keys_to_fetch)}/{len(new_keys)} keys from '{label}'")
+            for key in keys_to_fetch:
+                data = client.lookup(key)
                 if data is not None:
-                    # HashTable.insert expects a string value
                     if not isinstance(data, str):
                         data = json.dumps(data)
                     self.server.insert(key, data)
-                    print(f"[{self.peer_name}] Stored key: '{key}'")
-                else:
-                    print(f"[{self.peer_name}] Key '{key}' returned None from peer, skipping.")
+                    print(f"[{self.peer_name}] Stored '{key}' from '{label}'")
+
+            self.dead_peers[label] = 0
 
         except Exception as e:
-            print(f"[{self.peer_name}] Sync failed: {e}. Will retry next interval.")
-            # Reset client so we reconnect fresh on next attempt
-            if self.client:
-                self.client.close()
-                self.client = None
+            print(f"[{self.peer_name}] Sync with '{label}' failed: {e}")
+            self.dead_peers[label] = self.dead_peers.get(label, 0) + 1
 
+        finally:
+            client.close()
+
+    def _get_all_peers(self):
+        """ Query the catalog and return all peers in this project except ourselves. """
+        print(f"[{self.peer_name}] Querying catalog for peers in '{self.base_project_name}'...")
+        catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
+        try:
+            response = requests.get(catalog_url, timeout=10)
+            response.raise_for_status()
+            services = response.json()
+ 
+            our_project = f"{self.base_project_name}-{self.peer_name}"
+            peers = [
+                e for e in services
+                if (e.get("type") == "hashtable"
+                    and e.get("project", "").startswith(self.base_project_name + "-")
+                    and e.get("project") != our_project)
+            ]
+            print(f"[{self.peer_name}] Found {len(peers)} peer(s) in catalog.")
+            return peers
+ 
+        except Exception as e:
+            print(f"[{self.peer_name}] Catalog query failed: {e}")
+            return []
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
