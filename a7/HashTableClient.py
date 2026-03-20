@@ -79,8 +79,7 @@ class HashTableClient:
                     raise Exception(f"Trouble creating socket")
                 self.s.settimeout(5)
                 self.s.connect((self.host, self.port))
-                if not debug:
-                    print(f"DEBUG ONLY: Connected to {self.host}:{self.port}")
+                print(f"DEBUG ONLY: Connected to {self.host}:{self.port}")
 
             except Exception as e:
                 print(f"DEBUG ONLY: Connection Error: {e}, trying again in {delay}s")
@@ -125,7 +124,7 @@ class HashTableClient:
         length = int(prefix.decode('utf-8'))
         return self._recv_exact(length)
 
-    def _rpc(self, m, k=None, v=None):
+    def _rpc(self, m, k=None, v=None, no_retry=False):
         req = {
             "method": m,
             "key": k,
@@ -136,6 +135,8 @@ class HashTableClient:
         while True:
             try:
                 if not self.s:
+                    if no_retry:
+                        raise ConnectionError("Socket not connected")
                     self.connect(False)
 
                 self._send(req)
@@ -146,11 +147,13 @@ class HashTableClient:
                     raise Exception("No Response Received")
 
                 if not res.get("ok"):
-                    print(f"{res.get("error", "Unknown Error")} : {res.get("message", "Unknown Server Error")}")
+                    print(f"{res.get('error', 'Unknown Error')} : {res.get('message', 'Unknown Server Error')}")
                     return res
 
                 return res.get("data")
             except Exception as e:
+                if no_retry:
+                    raise
                 print(f"DEBUG ONLY: RPC Request Error: {e}, trying again in {delay}s")
                 self.s = None
                 time.sleep(delay)
@@ -166,9 +169,27 @@ class HashTableClient:
     def lookup(self, k):
         return self._rpc("lookup", k).get("value")
 
-    def remove(self, k):
-        self._rpc("remove", k)
-        return True                                 # treats non-existent k as success
+    def lookup_direct(self, k):
+        """Like lookup() but raises on failure instead of retrying.
+        Use this when you've manually set client.s in a sync context."""
+        return self._rpc("lookup", k, no_retry=True).get("value")
+
+    def get_description(self, my_project=None):
+        """
+        Fetch the remote peer's file list.
+        Pass my_project so the server knows our project name and can
+        reverse-sync back to us by catalog lookup rather than by IP.
+        Does not retry — callers manage their own error handling.
+        """
+        req = {"method": "desc", "key": None, "value": None}
+        if my_project:
+            req["project"] = my_project
+        self._send(req)
+        res = json.loads(self._recv().decode())
+        if not res or not res.get("ok"):
+            raise Exception(f"get_description failed: {res}")
+        data = res.get("data")
+        return data.get("files"), data.get("peers")
 
     def size(self):
         return self._rpc("size").get("value")
@@ -176,10 +197,6 @@ class HashTableClient:
     def query(self, k):
         res = self._rpc("query", k).get("value")
         return res
-
-    def get_description(self):
-        res = self._rpc("desc")
-        return (res.get("files"), res.get("peers"))
 
     #######################
     ### File Functions

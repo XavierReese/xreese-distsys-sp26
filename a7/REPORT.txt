@@ -1,107 +1,372 @@
-1. Sample Test Run
+1. 3-way test across two machines
 
-Discovered xreese-student13-A5 at student13.cse.nd.edu:52963
---- Starting Tests for project: xreese-student13-A5 ---
-DEBUG ONLY: Connected to student13.cse.nd.edu:52963
-Server contains 50 files.
-Known peers: ['129.74.152.140:35512', '129.74.152.140:35528']
-Fetched file_00.json in 0.0040s
-Fetched file_01.json in 0.0041s
-Fetched file_02.json in 0.0038s
-Fetched file_03.json in 0.0037s
-Fetched file_04.json in 0.0037s
-Fetched file_05.json in 0.0040s
-Fetched file_06.json in 0.0038s
-Fetched file_07.json in 0.0040s
-Fetched file_08.json in 0.0040s
-Fetched file_09.json in 0.0039s
+**These logs are very long, they end around line 250
 
+Peer A (student machine 13)
 
-Kill & Restart Server Now (4 second delay)
+No Checkpoint File Found
+No Log File Found
+Server peerA listening on student13.cse.nd.edu:39987
+[peerA] Peer active on student13.cse.nd.edu:39987. Serving and polling...
+[peerA] Querying catalog for peers in 'xreese43'...
+Update Sent
+[peerA] Found 0 peer(s) in catalog.
+[peerA] no other peers found to sync with
+[peerA] Incoming connection from ('129.74.152.143', 38930)
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 58734)
+[peerA] Incoming connection from ('129.74.152.140', 58750)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerA] Querying catalog for peers in 'xreese43'...
+[peerA] Found 2 peer(s) in catalog.
+[peerA] Incoming connection from ('129.74.152.140', 37292)
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 37296)
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 50516)
+[peerA] Incoming connection from ('129.74.152.140', 50530)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+Update Sent
+[peerA] Querying catalog for peers in 'xreese43'...
+[peerA] Found 2 peer(s) in catalog.
+[peerA] Incoming connection from ('129.74.152.140', 42812)
+[peerA] Incoming connection from ('129.74.152.140', 42824)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 60400)
+[peerA] Incoming connection from ('129.74.152.140', 60410)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerA] Querying catalog for peers in 'xreese43'...
+[peerA] Found 2 peer(s) in catalog.
+[peerA] Incoming connection from ('129.74.152.140', 56120)
+[peerA] Incoming connection from ('129.74.152.140', 56126)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 41448)
+[peerA] Incoming connection from ('129.74.152.140', 41458)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+Update Sent
+[peerA] Querying catalog for peers in 'xreese43'...
+[peerA] Found 2 peer(s) in catalog.
+[peerA] Incoming connection from ('129.74.152.140', 50546)
+[peerA] Incoming connection from ('129.74.152.140', 50552)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 34852)
+[peerA] Incoming connection from ('129.74.152.140', 34856)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerA] Querying catalog for peers in 'xreese43'...
+[peerA] Found 2 peer(s) in catalog.
+[peerA] Incoming connection from ('129.74.152.140', 44736)
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 44752)
+[peerA] Peer disconnected, closing socket.
+[peerA] Incoming connection from ('129.74.152.140', 35382)
+[peerA] Incoming connection from ('129.74.152.140', 35388)
+[peerA] Peer disconnected, closing socket.
+[peerA] Peer disconnected, closing socket.
+[Server peerA] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[Server peerA] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
 
+------------------------------------
 
-DEBUG ONLY: RPC Request Error: Connection closed, trying again in 1s
-DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 1s
-DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 2s
-DEBUG ONLY: Connection Error: [Errno 111] Connection refused, trying again in 4s
-DEBUG ONLY: Connected to student13.cse.nd.edu:43353
-Fetched file_10.json in 8.1442s
-Fetched file_11.json in 0.2106s
-Fetched file_12.json in 0.0044s
-Fetched file_13.json in 0.0041s
-Fetched file_14.json in 0.0041s
-Fetched file_15.json in 0.0040s
-Fetched file_16.json in 0.0042s
-Fetched file_17.json in 0.0040s
-Fetched file_18.json in 0.0042s
-Fetched file_19.json in 0.0046s
-Fetched file_20.json in 0.0040s
-Fetched file_21.json in 0.0044s
-Fetched file_22.json in 0.0045s
-Fetched file_23.json in 0.0047s
-Fetched file_24.json in 0.0043s
-Fetched file_25.json in 0.0049s
-Fetched file_26.json in 0.0045s
-Fetched file_27.json in 0.0045s
-Fetched file_28.json in 0.0046s
-Fetched file_29.json in 0.0049s
-Fetched file_30.json in 0.0047s
-Fetched file_31.json in 0.0044s
-Fetched file_32.json in 0.0046s
-Fetched file_33.json in 0.0040s
-Fetched file_34.json in 0.0041s
-Fetched file_35.json in 0.0039s
-Fetched file_36.json in 0.0045s
-Fetched file_37.json in 0.0041s
-Fetched file_38.json in 0.0044s
-Fetched file_39.json in 0.0042s
-Fetched file_40.json in 0.0040s
-Fetched file_41.json in 0.0042s
-Fetched file_42.json in 0.0041s
-Fetched file_43.json in 0.0046s
-Fetched file_44.json in 0.0041s
-Fetched file_45.json in 0.0039s
-Fetched file_46.json in 0.0044s
-Fetched file_47.json in 0.0045s
-Fetched file_48.json in 0.0043s
-Fetched file_49.json in 0.0044s
---- Test Complete ---
+Peer B (student machine 10)
 
-2. Time Differences
+No Checkpoint File Found
+No Log File Found
+Server peerB listening on student10.cse.nd.edu:55453
+[peerB] Peer active on student10.cse.nd.edu:55453. Serving and polling...
+[peerB] Querying catalog for peers in 'xreese43'...Update Sent
 
-As I left the debug statements in (which would be removed under normal circumstances),
-you can see exactly where the retries take place. Fetching file_10.json taxes over 8 seconds,
-After the RPC Request fails then 3 reconnection requests fail before I manually restarted the server.
+[peerB] Found 1 peer(s) in catalog.
+[peerB] Fetching 40/40 keys from 'xreese43-peerA'
+[peerB] Incoming connection from ('129.74.152.140', 53448)
+LOOKING UP file_018
+[peerB] Peer disconnected, closing socket.LOOKING UP file_014
+[peerB] Incoming connection from ('129.74.152.143', 49290)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.143', 55888)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerB] Querying catalog for peers in 'xreese43'...
+[peerB] Found 2 peer(s) in catalog.
+[peerB] Incoming connection from ('129.74.152.140', 39154)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.140', 39162)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 36186)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 36472)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+Update Sent
+[peerB] Querying catalog for peers in 'xreese43'...
+[peerB] Found 2 peer(s) in catalog.
+[peerB] Incoming connection from ('129.74.152.140', 55902)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.140', 55906)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 33332)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 41678)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerB] Querying catalog for peers in 'xreese43'...
+[peerB] Found 2 peer(s) in catalog.
+[peerB] Incoming connection from ('129.74.152.140', 41794)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.140', 41808)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 33166)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 52598)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+Update Sent
+[peerB] Querying catalog for peers in 'xreese43'...
+[peerB] Found 2 peer(s) in catalog.
+[peerB] Incoming connection from ('129.74.152.140', 41622)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.140', 41630)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 49146)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 43258)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerB] Querying catalog for peers in 'xreese43'...
+[peerB] Found 2 peer(s) in catalog.
+[peerB] Incoming connection from ('129.74.152.140', 38600)
+[peerB] Peer disconnected, closing socket.
+[Server peerB] Reverse syncing to xreese43-peerC at student10.cse.nd.edu:58907
+[peerB] Incoming connection from ('129.74.152.140', 38608)
+[peerB] Peer disconnected, closing socket.
+[peerB] Incoming connection from ('129.74.152.143', 55600)
+[peerB] Peer disconnected, closing socket.
 
-I also see a time difference in file_11's fetch time. This could be due to continuing connection-related
-messages, but I'm not entirely sure.
+--------------------------------------
 
-3. Implemented Features
+peer C (student machine 10, started with peer B)
 
-- Name Registration
+No Checkpoint File Found
+No Log File Found
+Server peerC listening on student10.cse.nd.edu:58907
+[peerC] Peer active on student10.cse.nd.edu:58907. Serving and polling...
+[peerC] Querying catalog for peers in 'xreese43'...
+Update Sent
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Fetching 20/40 keys from 'xreese43-peerA'
+[peerC] Incoming connection from ('129.74.152.140', 46978)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 34280)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 36094)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerC] Querying catalog for peers in 'xreese43'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 45240)
+[peerC] Peer disconnected, closing socket.
+[peerC] Fetching 20/40 keys from 'xreese43-peerA'
+[Server peerC] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[peerC] Incoming connection from ('129.74.152.140', 45250)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 34252)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 38376)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+Update Sent
+[peerC] Querying catalog for peers in 'xreese43'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 32848)
+[peerC] Peer disconnected, closing socket.
+[peerC] Fetching 20/40 keys from 'xreese43-peerA'
+[Server peerC] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[peerC] Incoming connection from ('129.74.152.140', 32862)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 36920)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 43216)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerC] Querying catalog for peers in 'xreese43'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 42988)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[peerC] Incoming connection from ('129.74.152.140', 42996)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 48710)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 44878)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+Update Sent
+[peerC] Querying catalog for peers in 'xreese43'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 44916)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[peerC] Incoming connection from ('129.74.152.140', 44924)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 55814)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 52286)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerA at student13.cse.nd.edu:39987
+[peerC] Querying catalog for peers in 'xreese43'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 53412)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Reverse syncing to xreese43-peerB at student10.cse.nd.edu:55453
+[peerC] Incoming connection from ('129.74.152.140', 53422)
+[peerC] Peer disconnected, closing socket.
+[peerC] Incoming connection from ('129.74.152.143', 35164)
+[peerC] Peer disconnected, closing socket.
 
-I relatively quickly set up a thread on the server side to send a simple update message.
-On the client side, I used a classmethod to set up an alternate way to initialize the client class,
-using a project name, which would then be found within the catalog to locate the host/port.
+---------------------------
 
-I came back to this stage to fix and refine things throughout the other two sections. I added a
-discover() method that shares code with my new classmethod, allowing a re-searching of the catalog
-when the server isn't responding. The most challenging fix was to add logic to choose the most-recently-heard-from
-option if there were multiple entries with my project name. There was a new entry every time a new port was given,
-so this step was quite necessary.
+Analysis of 3-way test
 
-- retry
+- Although the IP addresses and port numbers are not very human-readable, the "Reverse syncing" statements do include the full peer name.
+  This reverse sync is fired off after a get_description request is received from a peer. It is in a separate thread and therefore avoids deadlock.
+  Each peer in this example is talking to each other, as these statements reveal. Also, throughout the logs you can see the "Found 2 peer(s) in catalog" statements.
 
-The most challenging part of this feature was designing the pattern to retry events upon failure. I ended up with a
-delay variable which would double each time, and be capped at 128 seconds. I also had to ensure that no failures would
-"escape" the client and be returned to the user, instead it would launch the client into another retry.
+- Peer B and Peer C, started simultaneously on machine 10, do find each other and begin to sync with each other. This can be seen on line 242 in this file, as an example.
 
-Once I had the pattern, I applied this to the discover, connect, and sending/receiving functions. When the send/receive fails,
-it retries connection to the socket. When that fails, it searches for the most recent port from the catalog, so I can ensure
-that the client is always acting upon the most recent information about the server available
+- For better logs with more explicit file transferring, see below.
 
-- get_description()
+2. System Analysis
 
-For this feature I was able to mostly make additions to previous logic which separately directed requests based on methods.
-I did add a "peers" set of the server. Every new peer that joins gets added and when the description is requested all peers are returned.
-My previous organization of the methods made no particular part of this very challenging.
+The logs of the 7-peer scaled test are much better, but with 7 of them I have kept them in the directory "logs_scale".
+
+Here is an excerpt from peer D:
+
+-----------------------------
+
+[peerD] Fetching 9/27 keys from 'xreese44-peerC'
+LOOKING UP file_000
+[peerD] Stored 'file_000' from 'xreese44-peerC'
+LOOKING UP file_009
+[peerD] Stored 'file_009' from 'xreese44-peerC'
+LOOKING UP file_039
+[peerD] Stored 'file_039' from 'xreese44-peerC'
+LOOKING UP file_017
+[peerD] Stored 'file_017' from 'xreese44-peerC'
+LOOKING UP file_024
+[peerD] Stored 'file_024' from 'xreese44-peerC'
+LOOKING UP file_013
+[peerD] Stored 'file_013' from 'xreese44-peerC'
+LOOKING UP file_002
+[peerD] Stored 'file_002' from 'xreese44-peerC'
+LOOKING UP file_031
+[peerD] Stored 'file_031' from 'xreese44-peerC'
+LOOKING UP file_008
+[peerD] Stored 'file_008' from 'xreese44-peerC'
+[peerD] Fetching 6/18 keys from 'xreese44-peerA'
+LOOKING UP file_023
+[peerD] Incoming connection from ('129.74.152.143', 58212)
+[peerD] Peer disconnected, closing socket.
+[peerD] Stored 'file_023' from 'xreese44-peerA'
+LOOKING UP file_033
+[peerD] Stored 'file_033' from 'xreese44-peerA'
+LOOKING UP file_001
+[peerD] Stored 'file_001' from 'xreese44-peerA'
+LOOKING UP file_014
+[peerD] Stored 'file_014' from 'xreese44-peerA'
+LOOKING UP file_019
+[peerD] Stored 'file_019' from 'xreese44-peerA'
+LOOKING UP file_003
+[peerD] Stored 'file_003' from 'xreese44-peerA'
+[peerD] Incoming connection from ('129.74.152.143', 58228)
+[peerD] Peer disconnected, closing socket.
+[peerD] Incoming connection from ('129.74.152.143', 58232)
+[peerD] Peer disconnected, closing socket.
+[Server peerD] Reverse syncing to xreese44-peerE at student13.cse.nd.edu:43723
+[Server peerD] Reverse sync: stored 'file_006' from xreese44-peerE
+[Server peerD] Reverse sync: stored 'file_012' from xreese44-peerE
+[Server peerD] Reverse sync: stored 'file_029' from xreese44-peerE
+[peerD] Incoming connection from ('129.74.152.143', 40434)
+[peerD] Peer disconnected, closing socket.
+[Server peerD] Reverse syncing to xreese44-peerF at student13.cse.nd.edu:55499
+[Server peerD] Reverse sync: stored 'file_038' from xreese44-peerF
+[Server peerD] Reverse sync: stored 'file_037' from xreese44-peerF
+[peerD] Incoming connection from ('129.74.152.143', 40436)
+[peerD] Peer disconnected, closing socket.
+[Server peerD] Reverse syncing to xreese44-peerG at student13.cse.nd.edu:57131
+[Server peerD] Reverse sync: stored 'file_010' from xreese44-peerG
+[peerD] Incoming connection from ('129.74.152.143', 48350)
+[peerD] Peer disconnected, closing socket.
+[Server peerD] Reverse syncing to xreese44-peerA at student13.cse.nd.edu:47479
+[Server peerD] Reverse sync: stored 'file_028' from xreese44-peerA
+[Server peerD] Reverse sync: stored 'file_020' from xreese44-peerA
+[Server peerD] Reverse sync: stored 'file_005' from xreese44-peerA
+[peerD] Incoming connection from ('129.74.152.143', 60532)
+[peerD] Peer disconnected, closing socket.
+[Server peerD] Reverse syncing to xreese44-peerB at student13.cse.nd.edu:52827
+[Server peerD] Reverse sync: stored 'file_015' from xreese44-peerB
+[peerD] Querying catalog for peers in 'xreese44'...
+[peerD] Found 6 peer(s) in catalog.
+[peerD] Incoming connection from ('129.74.152.143', 60534)
+[peerD] Peer disconnected, closing socket.
+[peerD] Fetching 1/2 keys from 'xreese44-peerB'
+LOOKING UP file_030
+[peerD] Stored 'file_030' from 'xreese44-peerB'
+[peerD] Fetching 1/1 keys from 'xreese44-peerC'
+LOOKING UP file_016
+[peerD] Stored 'file_016' from 'xreese44-peerC'
+[peerD] Already up to date with 'xreese44-peerG'.
+[peerD] Already up to date with 'xreese44-peerE'.
+[peerD] Already up to date with 'xreese44-peerF'.
+[peerD] Already up to date with 'xreese44-peerA'.
+[Server peerD] Reverse syncing to xreese44-peerC at student13.cse.nd.edu:57285
+[peerD] Incoming connection from ('129.74.152.143', 60548)
+[peerD] Peer disconnected, closing socket.
+
+-----------------
+
+This is toward the end of peer D's "catching up" phase. It previously was receiving a high number of files (at first 27 are missing of 40), then later is only missing 1-2 files per peer sync.
+It is also shown that peer D is communicating with all other peers A-G, which were started at various times or simultaneously with peer D.
+
+See the pdf in this folder for a drawn diagram of the peer communication. The logs are in the logs_scale folder.
+
+The system *did* end up being fully connected, as each peer chose to talk to all existing peers upon joining.
+Each connection was also reciprocated with an attempted sync, even though not many were successful as usually one peer was entirely better updated than the other.
+The numbers in the file represent the general proportion of the 40 test files which were distributed through a particular connection. They are approximate, because my file selection was randomized and varied.
+
+My file selection was as follows:
+- take note of all peers known to be active on the catalog
+- for each peer:
+    - compare my files to the ones on the peer and find what I'm missing
+    - download 1/(known_peers) of these missing files from this peer, randomly choosing which
+    - move on to next peer
+
+This resulted in a randomized slow accumulation of files accross the network rather than stopping and updating entirely based off of one peer.
+In an active network where peers were constantly adding files, this would help the speed with which it would be found by another peer, as no one peer-to-peer interaction is taking a long time.
+Additionally, if a lot of files were dropped at once to a single peer in this network, each other peer would sync a random chunk of them before turning to another peer and syncing some of those, distributing the load rather than
+having all of the uploading done by the first peer to all other peers.
+
+Some things which I could do to improve the system or adapt it depending on context:
+- Set a minimum for the number of files to be transferred in an interaction (if available for transfer), to prevent the 1 or 2 files transfers that finish out the syncing.
+- Dial in the delays depending on latencies and the activity of the system to get fast syncing without performance issues (such as overworking peers with rapid syncings)

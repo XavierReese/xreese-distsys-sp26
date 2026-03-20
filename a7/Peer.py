@@ -38,7 +38,7 @@ class Peer:
         unique_proj = f"{project_name}-{peer_name}"
 
         # Start our server with the unique project name
-        self.server = HashTableServer(proj=unique_proj, peer_id=peer_name)
+        self.server = HashTableServer(proj=unique_proj, peer_id=peer_name, base_project_name=project_name)
 
         # Register the master socket with the selector for accept events
         self.master_socket = self.server.get_socket()
@@ -182,7 +182,7 @@ class Peer:
                 continue
  
             try:
-                remote_files, _ = client.get_description()
+                remote_files, _ = client.get_description(my_project=self.server.project_name)
                 if not remote_files:
                     client.close()
                     continue
@@ -204,7 +204,8 @@ class Peer:
  
                 print(f"[{self.peer_name}] Fetching {len(keys_to_fetch)}/{len(new_keys)} keys from '{label}'")
                 for key in keys_to_fetch:
-                    data = client.lookup(key)
+                    print(f"LOOKING UP {key}")
+                    data = client.lookup_direct(key)
                     if data is not None:
                         if not isinstance(data, str):
                             data = json.dumps(data)

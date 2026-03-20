@@ -127,71 +127,74 @@ class HashTableServer:
                 print(f"Failed to send update: {e}")
             time.sleep(60)
  
-    def _lookup_server_port(self, caller_host):
+    def _lookup_server_port(self, caller_project):
+        """
+        Look up a peer's host and port by their full project name.
+        Using project name (e.g. 'xreese38-peerB') instead of hostname
+        avoids the IP vs hostname mismatch and same-machine ambiguity.
+        """
         try:
             catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
             response = requests.get(catalog_url, timeout=5)
             response.raise_for_status()
             services = response.json()
- 
+
             best = None
             for entry in services:
                 if (entry.get("type") == "hashtable"
-                        and entry.get("name") == caller_host
-                        and entry.get("project", "").startswith(self.base_project_name + "-")
-                        and entry.get("project") != self.project_name):
+                        and entry.get("project") == caller_project):
                     if best is None or entry.get("lastheardfrom", 0) > best.get("lastheardfrom", 0):
                         best = entry
- 
+
             if best:
                 return best.get("name"), int(best.get("port"))
             return None
         except Exception as e:
             print(f"[Server {self.peer_id}] Catalog lookup failed: {e}")
             return None
- 
-    def _reverse_sync(self, caller_host):
+
+    def _reverse_sync(self, caller_project):
         """
-        After receiving a get_description, this function is called to reverse sync with that peer
+        Called in a background thread after responding to a desc request.
+        Looks the caller up by project name so we get the right host:port
+        regardless of IP/hostname differences or multiple peers on one machine.
         """
-        result = self._lookup_server_port(caller_host)
+        result = self._lookup_server_port(caller_project)
         if not result:
-            print(f"[Server {self.peer_id}] Could not find server port for {caller_host}, skipping reverse sync.")
+            print(f"[Server {self.peer_id}] Could not find '{caller_project}' in catalog, skipping reverse sync.")
             return
- 
+
         host, port = result
-        print(f"[Server {self.peer_id}] Reverse syncing to {host}:{port}")
+        print(f"[Server {self.peer_id}] Reverse syncing to {caller_project} at {host}:{port}")
         try:
-            from HashTableClient import HashTableClient
             client = HashTableClient(host, port)
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(5)
             sock.connect((host, port))
             sock.settimeout(10)
             client.s = sock
- 
+
             remote_files, _ = client.get_description()
             if not remote_files:
                 client.close()
                 return
- 
+
             local_keys = set(self.ht.get_keys())
             new_keys = [k for k in remote_files if k not in local_keys]
             random.shuffle(new_keys)
- 
+
             share = max(1, len(new_keys) // 2)
             for key in new_keys[:share]:
-                data = client.lookup(key)
+                data = client.lookup_direct(key)
                 if data is not None:
                     if not isinstance(data, str):
-                        import json as _json
-                        data = _json.dumps(data)
+                        data = json.dumps(data)
                     self.ht.insert(key, data)
-                    print(f"[Server {self.peer_id}] Reverse sync: stored '{key}' from {host}:{port}")
- 
+                    print(f"[Server {self.peer_id}] Reverse sync: stored '{key}' from {caller_project}")
+
             client.close()
         except Exception as e:
-            print(f"[Server {self.peer_id}] Reverse sync to {host}:{port} failed: {e}")
+            print(f"[Server {self.peer_id}] Reverse sync to {caller_project} failed: {e}")
  
  
  
@@ -315,15 +318,18 @@ class HashTableServer:
                             "ok": True, 
                             "data": { "files": self.ht.files(), "peers": list(self.peers)}
                     }
- 
-                    # If we know who asked, go back and sync in reverse with them
-                    if caller_host:
+
+                    # The caller includes their project name in the request body
+                    # so we can look them up in the catalog by project name,
+                    # avoiding the IP vs hostname mismatch.
+                    caller_project = req.get("project")
+                    if caller_project and caller_project != self.project_name:
                         threading.Thread(
                             target=self._reverse_sync,
-                            args=(caller_host,),
+                            args=(caller_project,),
                             daemon=True
                         ).start()
- 
+
                     return result
  
                 case _:

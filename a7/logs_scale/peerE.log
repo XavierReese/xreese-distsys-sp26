@@ -1,0 +1,203 @@
+No Checkpoint File Found
+No Log File Found
+Server peerE listening on student13.cse.nd.edu:43723
+[peerE] Peer active on student13.cse.nd.edu:43723. Serving and polling...
+[peerE] Querying catalog for peers in 'xreese44'...
+Update Sent
+[peerE] Found 4 peer(s) in catalog.
+[peerE] Fetching 10/40 keys from 'xreese44-peerB'
+LOOKING UP file_029
+[peerE] Stored 'file_029' from 'xreese44-peerB'
+LOOKING UP file_021
+[peerE] Stored 'file_021' from 'xreese44-peerB'
+LOOKING UP file_022
+[peerE] Stored 'file_022' from 'xreese44-peerB'
+LOOKING UP file_004
+[peerE] Stored 'file_004' from 'xreese44-peerB'
+LOOKING UP file_012
+[peerE] Stored 'file_012' from 'xreese44-peerB'
+LOOKING UP file_006
+[peerE] Stored 'file_006' from 'xreese44-peerB'
+LOOKING UP file_031
+[peerE] Stored 'file_031' from 'xreese44-peerB'
+LOOKING UP file_026
+[peerE] Stored 'file_026' from 'xreese44-peerB'
+LOOKING UP file_034
+[peerE] Stored 'file_034' from 'xreese44-peerB'
+LOOKING UP file_008
+[peerE] Stored 'file_008' from 'xreese44-peerB'
+[peerE] Fetching 7/30 keys from 'xreese44-peerC'
+LOOKING UP file_036
+[peerE] Incoming connection from ('129.74.152.143', 54266)
+[peerE] Peer disconnected, closing socket.
+[peerE] Stored 'file_036' from 'xreese44-peerC'
+LOOKING UP file_023
+[peerE] Stored 'file_023' from 'xreese44-peerC'
+LOOKING UP file_003
+[peerE] Stored 'file_003' from 'xreese44-peerC'
+LOOKING UP file_009
+[peerE] Stored 'file_009' from 'xreese44-peerC'
+LOOKING UP file_032
+[peerE] Stored 'file_032' from 'xreese44-peerC'
+LOOKING UP file_011
+[peerE] Stored 'file_011' from 'xreese44-peerC'
+LOOKING UP file_028
+[peerE] Stored 'file_028' from 'xreese44-peerC'
+[peerE] Fetching 3/15 keys from 'xreese44-peerD'
+LOOKING UP file_039
+[peerE] Stored 'file_039' from 'xreese44-peerD'
+LOOKING UP file_013
+[peerE] Stored 'file_013' from 'xreese44-peerD'
+LOOKING UP file_014
+[peerE] Incoming connection from ('129.74.152.143', 54282)
+[peerE] Peer disconnected, closing socket.
+[peerE] Stored 'file_014' from 'xreese44-peerD'
+[peerE] Fetching 5/20 keys from 'xreese44-peerA'
+LOOKING UP file_020
+[peerE] Stored 'file_020' from 'xreese44-peerA'
+LOOKING UP file_033
+[peerE] Stored 'file_033' from 'xreese44-peerA'
+LOOKING UP file_019
+[peerE] Stored 'file_019' from 'xreese44-peerA'
+LOOKING UP file_037
+[peerE] Stored 'file_037' from 'xreese44-peerA'
+LOOKING UP file_000
+[peerE] Stored 'file_000' from 'xreese44-peerA'
+[peerE] Incoming connection from ('129.74.152.143', 54298)
+[peerE] Incoming connection from ('129.74.152.143', 54312)
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 44142)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerF at student13.cse.nd.edu:55499
+[Server peerE] Reverse sync: stored 'file_010' from xreese44-peerF
+[Server peerE] Reverse sync: stored 'file_024' from xreese44-peerF
+[Server peerE] Reverse sync: stored 'file_038' from xreese44-peerF
+[peerE] Incoming connection from ('129.74.152.143', 44144)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerG at student13.cse.nd.edu:57131
+[Server peerE] Reverse sync: stored 'file_018' from xreese44-peerG
+[Server peerE] Reverse sync: stored 'file_035' from xreese44-peerG
+[peerE] Incoming connection from ('129.74.152.143', 43084)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerA at student13.cse.nd.edu:47479
+[Server peerE] Reverse sync: stored 'file_017' from xreese44-peerA
+[Server peerE] Reverse sync: stored 'file_002' from xreese44-peerA
+[Server peerE] Reverse sync: stored 'file_005' from xreese44-peerA
+[Server peerE] Reverse sync: stored 'file_025' from xreese44-peerA
+[Server peerE] Reverse sync: stored 'file_015' from xreese44-peerA
+[peerE] Incoming connection from ('129.74.152.143', 48928)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerB at student13.cse.nd.edu:52827
+[Server peerE] Reverse sync: stored 'file_027' from xreese44-peerB
+[Server peerE] Reverse sync: stored 'file_016' from xreese44-peerB
+[peerE] Incoming connection from ('129.74.152.143', 48940)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 48944)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerC at student13.cse.nd.edu:57285
+[Server peerE] Reverse sync: stored 'file_007' from xreese44-peerC
+[Server peerE] Reverse syncing to xreese44-peerD at student13.cse.nd.edu:59529
+[Server peerE] Reverse sync: stored 'file_030' from xreese44-peerD
+[peerE] Querying catalog for peers in 'xreese44'...
+[peerE] Found 6 peer(s) in catalog.
+[peerE] Fetching 1/1 keys from 'xreese44-peerB'
+LOOKING UP file_001
+[peerE] Stored 'file_001' from 'xreese44-peerB'
+[peerE] Already up to date with 'xreese44-peerC'.
+[peerE] Already up to date with 'xreese44-peerG'.
+[peerE] Already up to date with 'xreese44-peerD'.
+[peerE] Already up to date with 'xreese44-peerF'.
+[peerE] Already up to date with 'xreese44-peerA'.
+[peerE] Incoming connection from ('129.74.152.143', 48958)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 48968)
+[peerE] Incoming connection from ('129.74.152.143', 48974)
+[peerE] Incoming connection from ('129.74.152.143', 48990)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 49000)
+[peerE] Incoming connection from ('129.74.152.143', 49006)
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 49582)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerF at student13.cse.nd.edu:55499
+[peerE] Incoming connection from ('129.74.152.143', 49586)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerG at student13.cse.nd.edu:57131
+[peerE] Incoming connection from ('129.74.152.143', 44066)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerA at student13.cse.nd.edu:47479
+[peerE] Incoming connection from ('129.74.152.143', 32900)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerB at student13.cse.nd.edu:52827
+[peerE] Incoming connection from ('129.74.152.143', 32904)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 32916)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerC at student13.cse.nd.edu:57285
+[Server peerE] Reverse syncing to xreese44-peerD at student13.cse.nd.edu:59529
+Update Sent
+[peerE] Querying catalog for peers in 'xreese44'...
+[peerE] Found 6 peer(s) in catalog.
+[peerE] Already up to date with 'xreese44-peerB'.
+[peerE] Already up to date with 'xreese44-peerC'.
+[peerE] Already up to date with 'xreese44-peerG'.
+[peerE] Already up to date with 'xreese44-peerD'.
+[peerE] Already up to date with 'xreese44-peerF'.
+[peerE] Already up to date with 'xreese44-peerA'.
+[peerE] Incoming connection from ('129.74.152.143', 42356)
+[peerE] Incoming connection from ('129.74.152.143', 42370)
+[peerE] Incoming connection from ('129.74.152.143', 42384)
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 42392)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 42406)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 42412)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 42388)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerF at student13.cse.nd.edu:55499
+[peerE] Incoming connection from ('129.74.152.143', 42428)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerG at student13.cse.nd.edu:57131
+[peerE] Incoming connection from ('129.74.152.143', 39684)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerA at student13.cse.nd.edu:47479
+[peerE] Incoming connection from ('129.74.152.143', 60000)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerB at student13.cse.nd.edu:52827
+[peerE] Incoming connection from ('129.74.152.143', 60006)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 60018)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerC at student13.cse.nd.edu:57285
+[Server peerE] Reverse syncing to xreese44-peerD at student13.cse.nd.edu:59529
+[peerE] Querying catalog for peers in 'xreese44'...
+[peerE] Found 6 peer(s) in catalog.
+[peerE] Already up to date with 'xreese44-peerB'.
+[peerE] Already up to date with 'xreese44-peerC'.
+[peerE] Already up to date with 'xreese44-peerG'.
+[peerE] Already up to date with 'xreese44-peerD'.
+[peerE] Already up to date with 'xreese44-peerF'.
+[peerE] Already up to date with 'xreese44-peerA'.
+[peerE] Incoming connection from ('129.74.152.143', 36326)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36342)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36352)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36358)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36368)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36370)
+[peerE] Peer disconnected, closing socket.
+[peerE] Incoming connection from ('129.74.152.143', 36386)
+[peerE] Peer disconnected, closing socket.
+[Server peerE] Reverse syncing to xreese44-peerF at student13.cse.nd.edu:55499
