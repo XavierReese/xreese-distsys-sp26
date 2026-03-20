@@ -1,32 +1,42 @@
-import os
+#!/usr/bin/env python3
+'''
+load_data.py
+
+Pre-loads test keys into a running peer so that subsequent peers
+have observable data to sync during testing.
+
+Usage: python load_data.py <project_name> <peer_name> <num_files>
+
+Example: python load_data.py myproject peerA 40
+
+The peer must already be running and registered with the catalog
+before you run this. Wait at least 5 seconds after starting the peer.
+'''
+
 import sys
-import json
+import time
 from HashTableClient import HashTableClient
 
-def main():
-    if len(sys.argv) < 3:
-        print("Usage: python3 load_data.py <project_name> <data_directory>")
-        sys.exit(1)
+if len(sys.argv) < 4:
+    print("Usage: python load_data.py <project_name> <peer_name> <num_files>")
+    sys.exit(1)
 
-    project_name = sys.argv[1]
-    data_dir = sys.argv[2]
-    
-    # Connect via project name (ensures we find the server even if port changed)
-    client = HashTableClient.from_project_name(project_name)
-    
-    if not os.path.exists(data_dir):
-        print(f"Directory {data_dir} not found.")
-        return
+project = sys.argv[1]
+peer    = sys.argv[2]
+n       = int(sys.argv[3])
 
-    print(f"Loading files from {data_dir} into {project_name}...")
+# The peer registers under "project-peername" in the catalog
+full_name = f"{project}-{peer}"
+print(f"Discovering '{full_name}' from catalog...")
+client = HashTableClient.from_project_name(full_name)
 
-    for filename in os.listdir(data_dir):
-        file_path = os.path.join(data_dir, filename)
-        with open(file_path, 'r') as f:
-            content = json.load(f)
-        
-        client.insert(str(filename), str(content))
-        print(f"Inserted: {filename}")
+print(f"Inserting {n} test keys into '{full_name}'...")
+for i in range(n):
+    key   = f"file_{i:03}"
+    value = f"content of file {i:03}"
+    client.insert(key, value)
+    print(f"  [+] {key}")
+    time.sleep(0.1)   # small delay so inserts are visible in peer logs
 
-if __name__ == "__main__":
-    main()
+print(f"\nDone. {n} keys inserted into '{full_name}'.")
+client.close()
