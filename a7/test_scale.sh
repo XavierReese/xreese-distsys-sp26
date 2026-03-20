@@ -8,6 +8,10 @@
 # Usage: bash test_scale.sh <project_name>
 # Example: bash test_scale.sh xreese01-a7-scale
 
+# Wipe previous run's data so peers start fresh
+rm -rf data/ table-*.ckpt table-*.txn
+mkdir -p data
+
 PROJECT=${1:?"Usage: bash test_scale.sh <project_name>"}
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)

@@ -1,18 +1,44 @@
 No Checkpoint File Found
-Log changed file count by 40
-Server peerC listening on student10.cse.nd.edu:47917
-[peerC] Peer active on student10.cse.nd.edu:47917. Serving and polling...
-[peerC] Querying catalog for peers in 'xreese29-a7'...
+No Log File Found
+Server peerC listening on student10.cse.nd.edu:44233
+[peerC] Peer active on student10.cse.nd.edu:44233. Serving and polling...
+[peerC] Querying catalog for peers in 'xreese38'...
 Update Sent
 [peerC] Found 2 peer(s) in catalog.
-[peerC] Incoming connection from ('129.74.152.140', 39330)
-Exception in thread Thread-3 (_reverse_sync):
+[peerC] Incoming connection from ('129.74.152.140', 50500)
+[peerC] Fetching 20/40 keys from 'xreese38-peerA'[peerC] Peer disconnected, closing socket.
+
+[Server peerC] Could not find server port for 129.74.152.140, skipping reverse sync.
+[peerC] Incoming connection from ('129.74.152.143', 36618)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Could not find server port for 129.74.152.143, skipping reverse sync.
+[peerC] Querying catalog for peers in 'xreese38'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 41532)
+[peerC] Peer disconnected, closing socket.
+[peerC] Fetching 20/40 keys from 'xreese38-peerA'
+[Server peerC] Could not find server port for 129.74.152.140, skipping reverse sync.
+[peerC] Incoming connection from ('129.74.152.143', 59962)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Could not find server port for 129.74.152.143, skipping reverse sync.
+Update Sent
+[peerC] Querying catalog for peers in 'xreese38'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Peer 'xreese38-peerA' unreachable ([Errno 111] Connection refused), skipping.
 Traceback (most recent call last):
-  File "/escnfs/home/xreese/miniforge3/envs/distsys/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
-    [peerC] Peer disconnected, closing socket.
-self.run()
-  File "/escnfs/home/xreese/miniforge3/envs/distsys/lib/python3.12/threading.py", line 1012, in run
-[peerC] Already up to date with 'xreese29-a7-peerB'.
-    self._target(*self._args, **self._kwargs)
-TypeError: HashTableServer._reverse_sync() takes 2 positional arguments but 15 were given
-[peerC] Already up to date with 'xreese29-a7-peerA'.
+  File "/escnfs/home/xreese/distsys/a7/Peer.py", line 170, in perform_p2p_sync
+    sock.connect((host, port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[peerC] Incoming connection from ('129.74.152.140', 42168)
+[peerC] Peer disconnected, closing socket.
+[Server peerC] Could not find server port for 129.74.152.140, skipping reverse sync.
+[peerC] Querying catalog for peers in 'xreese38'...
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 40504)
+[peerC] Peer disconnected, closing socket.
+[peerC] Peer 'xreese38-peerA' unreachable ([Errno 111] Connection refused), skipping.
+Traceback (most recent call last):
+  File "/escnfs/home/xreese/distsys/a7/Peer.py", line 170, in perform_p2p_sync
+    sock.connect((host, port))
+ConnectionRefusedError: [Errno 111] Connection refused
+[Server peerC] Could not find server port for 129.74.152.140, skipping reverse sync.
