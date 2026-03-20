@@ -16,6 +16,7 @@ import json
 import time
 from HashTable import HashTable
 import threading
+from HashTableClient import HashTableClient
 
 BUFSIZE = 1024
 
@@ -27,7 +28,7 @@ class HashTableServer:
         self.host = host
         self.port = port
         self.peer_id = peer_id
-        self.project_name = f"{proj}{self.peer_id}"
+        self.project_name = proj
 
         self.ht = HashTable(peer_id=self.peer_id)
 
@@ -74,11 +75,11 @@ class HashTableServer:
 
             # get host/port so we can reverse-sync
             try:
-                ca = conn.getpeername()
+                caller_host = conn.getpeername()[0]
             except Exception:
-                ca = None
+                caller_host = None
 
-            res = self.execute(req, caller_addr=ca)
+            res = self.execute(req, caller_host=caller_host)
             self._send(conn, res)
             return True
 
@@ -120,36 +121,71 @@ class HashTableServer:
                 print(f"Failed to send update: {e}")
             time.sleep(60)
 
-    def _reverse_sync(self, host, port):
+    def _lookup_server_port(self, caller_host):
+        try:
+            catalog_url = "http://catalog.cse.nd.edu:9097/query.json"
+            response = requests.get(catalog_url, timeout=5)
+            response.raise_for_status()
+            services = response.json()
+ 
+            best = None
+            for entry in services:
+                if (entry.get("type") == "hashtable"
+                        and entry.get("name") == caller_host
+                        and entry.get("project", "").startswith(self.base_project_name + "-")
+                        and entry.get("project") != self.project_name):
+                    if best is None or entry.get("lastheardfrom", 0) > best.get("lastheardfrom", 0):
+                        best = entry
+ 
+            if best:
+                return best.get("name"), int(best.get("port"))
+            return None
+        except Exception as e:
+            print(f"[Server {self.peer_id}] Catalog lookup failed: {e}")
+            return None
+
+    def _reverse_sync(self, caller_host):
         """
         After receiving a get_description, this function is called to reverse sync with that peer
         """
+        result = self._lookup_server_port(caller_host)
+        if not result:
+            print(f"[Server {self.peer_id}] Could not find server port for {caller_host}, skipping reverse sync.")
+            return
+
+        host, port = result
         print(f"[Server {self.peer_id}] Reverse syncing to {host}:{port}")
         try:
+            from HashTableClient import HashTableClient
             client = HashTableClient(host, port)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(5)
+            sock.connect((host, port))
+            sock.settimeout(10)
+            client.s = sock
+
             remote_files, _ = client.get_description()
             if not remote_files:
+                client.close()
                 return
-            
-            local_keys = set(self.ht.get_keys())
-            new_keys = [k for k in remote_files if not in local_keys]
 
-            # Shuffle keys so not all the same files are replicated
-            import random
+            local_keys = set(self.ht.get_keys())
+            new_keys = [k for k in remote_files if k not in local_keys]
             random.shuffle(new_keys)
 
-            for k in new_keys:
+            share = max(1, len(new_keys) // 2)
+            for key in new_keys[:share]:
                 data = client.lookup(key)
                 if data is not None:
                     if not isinstance(data, str):
-                        import json
-                        data = json.dumps(data)
-                    self.insert(key, data)
-                    print(f"[Server {self.peer_id}] Reverse Sync: stored '{k}' from {host}:{port}")
+                        import json as _json
+                        data = _json.dumps(data)
+                    self.ht.insert(key, data)
+                    print(f"[Server {self.peer_id}] Reverse sync: stored '{key}' from {host}:{port}")
 
             client.close()
         except Exception as e:
-            print(f"[Server {self.peer_id}] Reverse Sync FAILED with {host}:{port} {e}")
+            print(f"[Server {self.peer_id}] Reverse sync to {host}:{port} failed: {e}")
 
 
 
@@ -275,11 +311,11 @@ class HashTableServer:
                     }
 
                     # If we know who asked, go back and sync in reverse with them
-                    if caller_addr:
+                    if caller_host:
                         threading.Thread(
                             target=self._reverse_sync,
-                            args=(caller_addr[0], caller_addr[1]),
-                            deamon=True
+                            args=(caller_host,),
+                            daemon=True
                         ).start()
 
                     return result

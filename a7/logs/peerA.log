@@ -1,0 +1,20 @@
+Recovered 40 files from Checkpoint
+Server peerA listening on student13.cse.nd.edu:33843
+[peerA] Peer active on student13.cse.nd.edu:33843. Serving and polling...
+[peerA] Querying catalog for peers in 'xreese23-a7'...Update Sent
+
+[peerA] Found 0 peer(s) in catalog.
+[peerA] no other peers found to sync with
+[peerA] Incoming connection from ('129.74.152.143', 46768)
+Traceback (most recent call last):
+  File "/escnfs/home/xreese/distsys/a7/Peer.py", line 252, in <module>
+    p.run()
+  File "/escnfs/home/xreese/distsys/a7/Peer.py", line 76, in run
+    self.handle_peer_request(key, mask)
+  File "/escnfs/home/xreese/distsys/a7/Peer.py", line 99, in handle_peer_request
+    still_open = self.server.handle_one_request(sock)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/escnfs/home/xreese/distsys/a7/HashTableServer.py", line 82, in handle_one_request
+    res = self.execute(req, caller_host=caller_host)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: HashTableServer.execute() got an unexpected keyword argument 'caller_host'

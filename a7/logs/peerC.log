@@ -1,0 +1,18 @@
+No Checkpoint File Found
+Log changed file count by 40
+Server peerC listening on student10.cse.nd.edu:47917
+[peerC] Peer active on student10.cse.nd.edu:47917. Serving and polling...
+[peerC] Querying catalog for peers in 'xreese29-a7'...
+Update Sent
+[peerC] Found 2 peer(s) in catalog.
+[peerC] Incoming connection from ('129.74.152.140', 39330)
+Exception in thread Thread-3 (_reverse_sync):
+Traceback (most recent call last):
+  File "/escnfs/home/xreese/miniforge3/envs/distsys/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    [peerC] Peer disconnected, closing socket.
+self.run()
+  File "/escnfs/home/xreese/miniforge3/envs/distsys/lib/python3.12/threading.py", line 1012, in run
+[peerC] Already up to date with 'xreese29-a7-peerB'.
+    self._target(*self._args, **self._kwargs)
+TypeError: HashTableServer._reverse_sync() takes 2 positional arguments but 15 were given
+[peerC] Already up to date with 'xreese29-a7-peerA'.

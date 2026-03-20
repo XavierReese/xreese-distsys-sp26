@@ -23,6 +23,7 @@ import time
 import json
 import requests
 import random
+import threading
 from HashTableServer import HashTableServer
 from HashTableClient import HashTableClient
 
@@ -54,11 +55,13 @@ class Peer:
         # Store the base project_name for discovery
         self.base_project_name = project_name
 
+        self.dead_peers = {}
+
     def run(self):
         print(f"[{self.peer_name}] Peer active on {self.server.host}:{self.server.port}. Serving and polling...")
 
         # Initial discovery & sync — runs once at startup
-        self.find_and_sync()
+        threading.Thread(target=self.perform_p2p_sync, daemon=True).start()
 
         last_sync_check = time.time()
         sync_interval = 30  # Re-check for new data every 30s
@@ -73,7 +76,7 @@ class Peer:
                         self.handle_peer_request(key, mask)
 
                 if time.time() - last_sync_check > sync_interval:
-                    self.perform_p2p_sync()
+                    threading.Thread(target=self.perform_p2p_sync, daemon=True).start()
                     last_sync_check = time.time()
 
         except KeyboardInterrupt:
@@ -144,11 +147,6 @@ class Peer:
             print(f"[{self.peer_name}] Catalog query failed: {e}")
             return False
 
-    def find_and_sync(self):
-        """Find a peer and immediately perform an initial sync."""
-        if self.find_peer():
-            self.perform_p2p_sync()
-
     def perform_p2p_sync(self):
         """Connect to ALL peers and download any keys we don't have, balancing the load"""
         peers = self._get_all_peers()
@@ -157,8 +155,8 @@ class Peer:
             return
 
         for p in peers:
-            host = p.get("host")
-            port = p.get("port")
+            host = p.get("name")
+            port = int(p.get("port"))
             label = p.get("project", "unknown")
 
             if self.dead_peers.get(label, 0) >= 3:
@@ -166,14 +164,21 @@ class Peer:
                 continue
 
             client = HashTableClient(host, port)
-            client.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client.s.settimeout(2) # give up quickly on dead peers
             try:
-                client.s.connect((host, port))
-            except Exception:
-                print(f"[{self.peer_name}] Peer '{label}' unreachable, skipping.")
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(5)
+                sock.connect((host, port))
+                sock.settimeout(10)
+                client.s = sock
+            except Exception as e:
+                print(f"[{self.peer_name}] Peer '{label}' unreachable ({e}), skipping.")
                 self.dead_peers[label] = self.dead_peers.get(label, 0) + 1
-                client.s = None
+                import traceback
+                traceback.print_exc()
+                try:
+                    sock.close()
+                except Exception:
+                    pass
                 continue
 
             try:
@@ -183,7 +188,7 @@ class Peer:
                     continue
 
                 local_keys = set(self.server.get_keys())
-                new_keys = [k for k in remote_files if not in local_keys]
+                new_keys = [k for k in remote_files if k not in local_keys]
 
                 if not new_keys:
                     print(f"[{self.peer_name}] Already up to date with '{label}'.")
@@ -197,23 +202,23 @@ class Peer:
                 share = max(1, len(new_keys) // len(peers)) # split new keys amongst peers
                 keys_to_fetch = new_keys[:share]
 
-            print(f"[{self.peer_name}] Fetching {len(keys_to_fetch)}/{len(new_keys)} keys from '{label}'")
-            for key in keys_to_fetch:
-                data = client.lookup(key)
-                if data is not None:
-                    if not isinstance(data, str):
-                        data = json.dumps(data)
-                    self.server.insert(key, data)
-                    print(f"[{self.peer_name}] Stored '{key}' from '{label}'")
+                print(f"[{self.peer_name}] Fetching {len(keys_to_fetch)}/{len(new_keys)} keys from '{label}'")
+                for key in keys_to_fetch:
+                    data = client.lookup(key)
+                    if data is not None:
+                        if not isinstance(data, str):
+                            data = json.dumps(data)
+                        self.server.insert(key, data)
+                        print(f"[{self.peer_name}] Stored '{key}' from '{label}'")
 
-            self.dead_peers[label] = 0
+                self.dead_peers[label] = 0
 
-        except Exception as e:
-            print(f"[{self.peer_name}] Sync with '{label}' failed: {e}")
-            self.dead_peers[label] = self.dead_peers.get(label, 0) + 1
+            except Exception as e:
+                print(f"[{self.peer_name}] Sync with '{label}' failed: {e}")
+                self.dead_peers[label] = self.dead_peers.get(label, 0) + 1
 
-        finally:
-            client.close()
+            finally:
+                client.close()
 
     def _get_all_peers(self):
         """ Query the catalog and return all peers in this project except ourselves. """

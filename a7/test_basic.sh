@@ -2,56 +2,59 @@
 # test_basic.sh
 #
 # Basic 3-peer test for Assignment 7.
+# Run from the directory containing all your .py files.
 #
-# Run this script from the directory containing all your .py files.
-# It starts peerA on THIS machine, loads 40 files into it, then
-# prints instructions for starting peerB and peerC on a second machine.
+# This script runs on MACHINE 1 only.
+# After it loads data, SSH into machine 2 and run test_basic_machine2.sh
 #
-# Usage: bash test_basic.sh <project_name> <machine2_hostname>
-#
-# Example: bash test_basic.sh xreese-a7 student02.cse.nd.edu
+# Usage: bash test_basic.sh <project_name>
+# Example: bash test_basic.sh xreese01-a7
 
-set -e  # exit on any error
+PROJECT=${1:?"Usage: bash test_basic.sh <project_name>"}
 
-PROJECT=${1:?"Usage: bash test_basic.sh <project_name> <machine2_hostname>"}
-MACHINE2=${2:?"Usage: bash test_basic.sh <project_name> <machine2_hostname>"}
-
-SCRIPT_DIR=$(pwd)
-LOG_DIR="$SCRIPT_DIR/logs"
-mkdir -p "$LOG_DIR"
-
-echo "================================================"
-echo " A7 Basic Test — project: $PROJECT"
-echo "================================================"
-
-# --- Step 1: Start peerA in its own data directory ---
-echo "[1] Starting peerA..."
-mkdir -p "$SCRIPT_DIR/peer_peerA/data"
-cd "$SCRIPT_DIR/peer_peerA"
-python3 ../Peer.py "$PROJECT" peerA 2>&1 | tee "$LOG_DIR/peerA.log" &
-PEER_A_PID=$!
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 cd "$SCRIPT_DIR"
 
+mkdir -p data logs
+
+echo "================================================"
+echo " A7 Basic Test (machine 1) — project: $PROJECT"
+echo " Working dir: $SCRIPT_DIR"
+echo "================================================"
+
+# --- Step 1: Start peerA ---
+# All peers run from the same directory. HashTable names its files
+# table-peerA.ckpt / table-peerA.txn so peers don't collide.
+echo "[1] Starting peerA..."
+python3 -u Peer.py "$PROJECT" peerA > logs/peerA.log 2>&1 &
+PEER_A_PID=$!
 echo "    peerA PID: $PEER_A_PID"
-echo "    Waiting 8 seconds for peerA to register with catalog..."
+
+echo "    Waiting 8s for peerA to register with catalog..."
 sleep 8
 
-# --- Step 2: Load 40 test files into peerA ---
+# Sanity check — did the peer actually start?
+if ! kill -0 "$PEER_A_PID" 2>/dev/null; then
+    echo "ERROR: peerA failed to start. Check logs/peerA.log"
+    exit 1
+fi
+
+# --- Step 2: Load test data ---
 echo "[2] Loading 40 test files into peerA..."
 python3 load_data.py "$PROJECT" peerA 40
-echo "    Done loading. Waiting 5 seconds before starting other peers..."
-sleep 5
+echo "    Done loading."
 
-# --- Step 3: Instructions for machine 2 ---
 echo ""
 echo "================================================"
-echo " Now SSH into $MACHINE2 and run:"
+echo " peerA is running and loaded."
+echo " Now SSH into machine 2, copy all .py files and"
+echo " the shell scripts there, then run:"
 echo ""
 echo "   bash test_basic_machine2.sh $PROJECT"
 echo ""
-echo " Logs will appear in logs/ on that machine."
-echo " When done, come back here and press Ctrl+C to stop peerA."
+echo " Tailing peerA log below (Ctrl+C to stop peerA)."
 echo "================================================"
 echo ""
-echo "[3] peerA is running. Tailing log (Ctrl+C to stop)..."
-tail -f "$LOG_DIR/peerA.log"
+
+# Tail the log so you can watch activity as machine 2 connects
+tail -f logs/peerA.log

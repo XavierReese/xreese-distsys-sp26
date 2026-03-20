@@ -1,53 +1,63 @@
 #!/bin/bash
 # test_basic_machine2.sh
 #
-# Run on machine 2 AFTER test_basic.sh is running on machine 1
-# and peerA has been loaded with data.
-#
-# Starts peerB and peerC simultaneously so they discover each other
-# and demonstrate peer-to-peer communication between new peers.
+# Run on MACHINE 2 after test_basic.sh is running on machine 1.
+# Copy all .py files and scripts to the same directory on machine 2 first.
 #
 # Usage: bash test_basic_machine2.sh <project_name>
-#
-# Example: bash test_basic_machine2.sh xreese-a7
-
-set -e
+# Example: bash test_basic_machine2.sh xreese01-a7
 
 PROJECT=${1:?"Usage: bash test_basic_machine2.sh <project_name>"}
 
-SCRIPT_DIR=$(pwd)
-LOG_DIR="$SCRIPT_DIR/logs"
-mkdir -p "$LOG_DIR"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+cd "$SCRIPT_DIR"
+
+mkdir -p data logs
 
 echo "================================================"
 echo " A7 Basic Test (machine 2) — project: $PROJECT"
+echo " Working dir: $SCRIPT_DIR"
 echo "================================================"
 
-# Create separate data directories for each peer so their
-# checkpoint/log files and data/ folders don't collide
-mkdir -p "$SCRIPT_DIR/peer_peerB/data"
-mkdir -p "$SCRIPT_DIR/peer_peerC/data"
-
-# --- Start peerB and peerC at the same time ---
-# The & runs each in the background. We capture PIDs so we can
-# cleanly shut them down later.
+# --- Start peerB and peerC at exactly the same time ---
+# Both run from this directory. Their data files won't collide because
+# HashTable names files with the peer suffix (table-peerB.ckpt etc.)
+# and data/ files are UUIDs.
 echo "[1] Starting peerB and peerC simultaneously..."
 
-(cd "$SCRIPT_DIR/peer_peerB" && python3 ../Peer.py "$PROJECT" peerB 2>&1 | tee "$LOG_DIR/peerB.log") &
+python3 -u Peer.py "$PROJECT" peerB > logs/peerB.log 2>&1 &
 PEER_B_PID=$!
 
-(cd "$SCRIPT_DIR/peer_peerC" && python3 ../Peer.py "$PROJECT" peerC 2>&1 | tee "$LOG_DIR/peerC.log") &
+python3 -u Peer.py "$PROJECT" peerC > logs/peerC.log 2>&1 &
 PEER_C_PID=$!
 
 echo "    peerB PID: $PEER_B_PID"
 echo "    peerC PID: $PEER_C_PID"
-echo ""
-echo "Logs are being written to:"
-echo "  $LOG_DIR/peerB.log"
-echo "  $LOG_DIR/peerC.log"
-echo ""
-echo "Tailing both logs below. Press Ctrl+C when done (runs ~2 min)."
-echo "================================================"
 
-# Show both logs interleaved. The label shows which peer each line is from.
-tail -f "$LOG_DIR/peerB.log" "$LOG_DIR/peerC.log"
+# Give them a moment to start before tailing
+sleep 2
+
+# Sanity check
+for pid in $PEER_B_PID $PEER_C_PID; do
+    if ! kill -0 "$pid" 2>/dev/null; then
+        echo "ERROR: a peer failed to start. Check logs/"
+        exit 1
+    fi
+done
+
+echo ""
+echo "Logs: logs/peerB.log and logs/peerC.log"
+echo "Tailing both below (Ctrl+C to stop both peers)."
+echo "================================================"
+echo ""
+
+# Trap Ctrl+C to cleanly kill both peers
+cleanup() {
+    echo ""
+    echo "Stopping peerB and peerC..."
+    kill "$PEER_B_PID" "$PEER_C_PID" 2>/dev/null
+}
+trap cleanup EXIT
+
+# tail -f on two files interleaves them and prefixes each line with the filename
+tail -f logs/peerB.log logs/peerC.log
